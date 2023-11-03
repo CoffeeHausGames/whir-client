@@ -3,12 +3,24 @@ import './App.css';
 import Header from './components/Header';
 import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
+import UserProfile from './components/UserProfile'; // Import UserProfile
 
 function App() {
   const [activeTab, setActiveTab] = useState('signup'); // Use state to track the active tab
+  const [user, setUser] = useState(null); // Add state to track the signed up user
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+  };
+
+  const handleUserSignUp = (user) => { // Add a new handler for user signup
+    setUser(user);
+    setActiveTab('userprofile');
+  };
+
+  const handleUserSignIn = (user) => { // Add a new handler for user signup
+    setUser(user);
+    setActiveTab('userprofile');
   };
 
   return (
@@ -28,8 +40,9 @@ function App() {
           Sign In
         </span>
       </div>
-      {activeTab === 'signup' && <SignUp />}
-      {activeTab === 'signin' && <SignIn />}
+      {activeTab === 'signup' && <SignUp onSignUp={handleUserSignUp} />}
+      {activeTab === 'signin' && <SignIn onSignIn={handleUserSignIn} />}
+      {activeTab === 'userprofile' && <UserProfile user={user} />}
     </div>
   );
 }

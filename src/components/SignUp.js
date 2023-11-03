@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function SignUp() {
+function SignUp(props) {
   const [formData, setFormData] = useState({
     First_name: '',
     Last_name: '',
@@ -33,12 +33,14 @@ function SignUp() {
 
       if (response.ok) {
         console.log('User registered successfully');
+        props.onSignUp(formData);
       } else {
         console.error('User registration failed');
       }
     } catch (error) {
       console.error('Error:', error);
     }
+
   }; 
 
   return (

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function SignIn() {
+function SignIn(props) {
   const [formData, setFormData] = useState({
     Email: '',
     Password: '',
@@ -25,6 +25,7 @@ function SignIn() {
 
       if (response.ok) {
         console.log('User authenticated successfully');
+        props.onSignIn(formData);
       } else {
         console.error('User authentication failed');
       }
