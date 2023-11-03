@@ -1,23 +1,35 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import Header from './components/Header';
+import SignUp from './components/SignUp';
+import SignIn from './components/SignIn';
 
 function App() {
+  const [activeTab, setActiveTab] = useState('signup'); // Use state to track the active tab
+
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <Header /> {/* Add the Header component here */}
+      <div>
+        <span
+          className={activeTab === 'signup' ? 'active-tab' : 'inactive-tab'}
+          onClick={() => handleTabClick('signup')}
         >
-          Learn React
-        </a>
-      </header>
+          Sign Up
+        </span>
+        <span
+          className={activeTab === 'signin' ? 'active-tab' : 'inactive-tab'}
+          onClick={() => handleTabClick('signin')}
+        >
+          Sign In
+        </span>
+      </div>
+      {activeTab === 'signup' && <SignUp />}
+      {activeTab === 'signin' && <SignIn />}
     </div>
   );
 }
