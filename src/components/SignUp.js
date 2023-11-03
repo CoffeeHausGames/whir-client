@@ -39,7 +39,7 @@ function SignUp() {
     } catch (error) {
       console.error('Error:', error);
     }
-  };
+  }; 
 
   return (
     <div>
