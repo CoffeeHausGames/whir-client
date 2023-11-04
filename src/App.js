@@ -9,12 +9,14 @@ import Home from './components/Home';
 import UserSettings from './components/UserSettings'
 import Footer from './components/Footer';
 import BusinessSignIn from './components/BusinessSignIn';
+import BusinessProfile from './components/BusinessProfile';
 
 function App() {
   const [activeTab, setActiveTab] = useState('home');
   const [isProfileVisible, setIsProfileVisible] = useState(false); // New state variable
   const [isHomeVisible, setIsHomeVisible] = useState(false);
-  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [isUserSignedIn, setIsUserSignedIn] = useState(false);
+  const [isBusinessSignedIn, setIsBusinessSignedIn] = useState(false);
   const [isSignedUp, setIsSignedUp] = useState(false);
   const [user, setUser] = useState(null);
   const [business, setBusiness] = useState(null);
@@ -39,19 +41,30 @@ function App() {
   const handleUserSignIn = (user) => {
     setUser(user);
     setActiveTab('home');
-    setIsSignedIn(true);
+    setIsUserSignedIn(true);
   };
 
 
   const handleUserSignOut = () => {
     setUser(null);
     setActiveTab('signin');
-    setIsSignedIn(false);
+    setIsUserSignedIn(false);
+  };
+
+    const handleBusinessSignOut = () => {
+    setBusiness(null);
+    setActiveTab('signin');
+    setIsBusinessSignedIn(false);
   };
 
   // New function to toggle the visibility of the user profile
-  const handleProfileButtonClick = () => {
+  const handleUserProfileButtonClick = () => {
     setActiveTab('userprofile');
+    // setIsProfileVisible(!isProfileVisible);
+  };
+
+  const handleBusinessProfileButtonClick = () => {
+    setActiveTab('businessprofile');
     // setIsProfileVisible(!isProfileVisible);
   };
 
@@ -59,27 +72,29 @@ function App() {
     setActiveTab('home');
     // setIsProfileVisible(!isProfileVisible);
   };
-
+ 
   const handleSettingsButtonClick = () => {
     setActiveTab('usersettings');
     // setIsProfileVisible(!isProfileVisible);
   };
 
   const handleBusinessSignIn = () => {
-    setActiveTab('businesssignin');
+    setActiveTab('home'); // Set the active tab to 'businesssignin'
+    setIsBusinessSignedIn(true); // Set isSignedIn to true
   }
-  
 
   return (
     <div className="App">
       <Header 
-        onProfileButtonClick={handleProfileButtonClick}
+        onUserProfileButtonClick={handleUserProfileButtonClick}
+        onBusinessProfileButtonClick={handleBusinessProfileButtonClick}
         onHomeButtonClick={handleHomeButtonClick} 
         onSettingsButtonClick={handleSettingsButtonClick}
         onSignIn={() => setActiveTab('signin')}
         onSignUp={() => setActiveTab('signup')}
         onBusinessSignIn={() => setActiveTab('businesssignin')}
-        isSignedIn={isSignedIn}
+        isSignedIn={isUserSignedIn}
+        isBusinessSignedIn={isBusinessSignedIn}
       />
       {activeTab === 'signup' && <SignUp onSignUp={handleUserSignUp} />}
       {activeTab === 'signin' && <SignIn onSignIn={handleUserSignIn} />}
@@ -88,6 +103,9 @@ function App() {
       {activeTab === 'usersettings' && <UserSettings onSignIn={handleUserSignIn} />}
       {activeTab === 'userprofile' && (
         <UserProfile user={user} onSignOut={handleUserSignOut} />
+      )}
+      {activeTab === 'businessprofile' && (
+        <BusinessProfile business={business} onSignOut={handleBusinessSignOut} />
       )}
       <div>
         <Footer />

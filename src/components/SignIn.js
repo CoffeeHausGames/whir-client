@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './SignIn.css';
 
-function SignIn({props, onBusinessSignIn, onHomeButtonClick }) {
+function SignIn({onSignIn, onBusinessSignIn }) {
   const [showComponent, setShowComponent] = useState(false);
   const [formData, setFormData] = useState({
     Email: '',
@@ -24,10 +24,13 @@ function SignIn({props, onBusinessSignIn, onHomeButtonClick }) {
         },
         body: JSON.stringify(formData),
       });
-
+    
       if (response.ok) {
         console.log('User authenticated successfully');
-        props.onSignIn(formData);
+        const responseData = await response.json(); // Parse the JSON response
+        const user = { ...responseData.data, authenticated: true };
+        localStorage.setItem('user', JSON.stringify(user));
+        onSignIn(formData);
       } else {
         console.error('User authentication failed');
       }

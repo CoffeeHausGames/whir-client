@@ -2,16 +2,18 @@ import React, { useState, useEffect } from 'react';
 import './UserProfile.css';
 
 function UserProfile(props) {
-    const [showComponent, setShowComponent] = useState(false);
+  const [showComponent, setShowComponent] = useState(false);
 
-  const user = props.user;
+  // Retrieve user data from localStorage
+  const storedUserData = localStorage.getItem('user');
+  const user = JSON.parse(storedUserData);
+
   const handleSignOut = () => {
     // Perform sign out logic here, such as clearing user data or session
-    // For example, you can clear the user state and any stored tokens
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
+    // For example, you can clear the user data in localStorage
+    localStorage.removeItem('user');
 
-    // Reload the sign in page
+    // Reload the sign-in page
     window.location.reload();
   };
 
@@ -29,11 +31,9 @@ function UserProfile(props) {
   return (
     <div className={`userprofile ${showComponent ? 'visible' : 'transition-effect'}`}>
       <h2>User Profile</h2>
-      {/* <p>First Name: {user.First_name}</p> */}
-      {/* <p>Last Name: {user.Last_name}</p> */}
-      {/* <p>Email: {user.Email}</p> */}
+      <p>First Name: {user.first_name}</p>
+      <p>Last Name: {user.last_name}</p>
       <button onClick={handleSignOut}>Sign Out</button>
-      
     </div>
   );
 }

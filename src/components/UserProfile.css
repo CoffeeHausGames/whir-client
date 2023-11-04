@@ -1,6 +1,6 @@
   /* Define the transition effect */
   .transition-effect {
-    opacity: 1;
+    opacity: 1.1;
     transform: translateY(-10px);
     transition: opacity 1.2s ease, transform 1.2s ease;
   }
