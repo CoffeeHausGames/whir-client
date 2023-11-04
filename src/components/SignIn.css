@@ -42,6 +42,7 @@
     padding: 10px;
     margin: 15px;
     margin-right: 0px;
+    margin-top: 30px;
     border: 1px solid #fcde58;
     border-radius: 40px;
     font-family: 'Poppins', sans-serif;  
@@ -58,6 +59,15 @@
   
   .custom-button:hover {
     background-color: #ffffff;
+  }
+
+  .alt-login {
+    font-family: 'Poppins', sans-serif; 
+    border: none; 
+    background-color: transparent;
+    font-size: 13px;
+    cursor: pointer;
+    color: #fd9f52;
   }
 
   .title {

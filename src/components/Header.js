@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Header.css';
 import { Link } from 'react-router-dom'; // Import Link from React Router
 
-const Header = ({ onProfileButtonClick, onSettingsButtonClick, onHomeButtonClick, onSignIn, onSignUp, onSignOut, isSignedIn }) => {
+const Header = ({ onProfileButtonClick, onBusinessSignIn, onSettingsButtonClick, onHomeButtonClick, onSignIn, onSignUp, onSignOut, isSignedIn }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showComponent, setShowComponent] = useState(false);
 
@@ -65,9 +65,9 @@ const Header = ({ onProfileButtonClick, onSettingsButtonClick, onHomeButtonClick
             </button>
             {showDropdown && (
               <div className="dropdown-content">
-                <button onClick={() => handleProfileDropdownClick('userprofile')}>Profile</button>
-                <button onClick={() => handleProfileDropdownClick('usersettings')}>Settings</button>
-                <button onClick={() => handleProfileDropdownClick('signout')}>Log Out</button>
+                <button className="dropdown-item" onClick={() => handleProfileDropdownClick('userprofile')}>Profile</button>
+                <button className="dropdown-item" onClick={() => handleProfileDropdownClick('usersettings')}>Settings</button>
+                <button className="dropdown-item" onClick={() => handleProfileDropdownClick('signout')}>Log Out</button>
               </div>
             )}
           </div>
@@ -75,6 +75,9 @@ const Header = ({ onProfileButtonClick, onSettingsButtonClick, onHomeButtonClick
           <>
             <button className="menu-button" onClick={onSignIn}>
               Sign In
+            </button>
+            <button className="menu-button" onClick={onBusinessSignIn}>
+              Business Sign In
             </button>
             <button className="join menu-button" onClick={onSignUp}>
               Join Whir
