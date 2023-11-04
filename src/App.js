@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
 import SignUp from './components/SignUp';
@@ -7,6 +8,7 @@ import UserProfile from './components/UserProfile';
 import Home from './components/Home';
 import UserSettings from './components/UserSettings'
 import Footer from './components/Footer';
+import BusinessSignIn from './components/BusinessSignIn';
 
 function App() {
   const [activeTab, setActiveTab] = useState('home');
@@ -15,6 +17,7 @@ function App() {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [isSignedUp, setIsSignedUp] = useState(false);
   const [user, setUser] = useState(null);
+  const [business, setBusiness] = useState(null);
 
    // State for component transition
    const [isEntering, setIsEntering] = useState(false);
@@ -39,6 +42,7 @@ function App() {
     setIsSignedIn(true);
   };
 
+
   const handleUserSignOut = () => {
     setUser(null);
     setActiveTab('signin');
@@ -60,6 +64,10 @@ function App() {
     setActiveTab('usersettings');
     // setIsProfileVisible(!isProfileVisible);
   };
+
+  const handleBusinessSignIn = () => {
+    setActiveTab('businesssignin');
+  }
   
 
   return (
@@ -70,11 +78,13 @@ function App() {
         onSettingsButtonClick={handleSettingsButtonClick}
         onSignIn={() => setActiveTab('signin')}
         onSignUp={() => setActiveTab('signup')}
+        onBusinessSignIn={() => setActiveTab('businesssignin')}
         isSignedIn={isSignedIn}
       />
       {activeTab === 'signup' && <SignUp onSignUp={handleUserSignUp} />}
       {activeTab === 'signin' && <SignIn onSignIn={handleUserSignIn} />}
       {activeTab === 'home' && <Home onSignIn={handleUserSignIn} />}
+      {activeTab === 'businesssignin' && <BusinessSignIn onBusinessSignIn={handleBusinessSignIn} />}
       {activeTab === 'usersettings' && <UserSettings onSignIn={handleUserSignIn} />}
       {activeTab === 'userprofile' && (
         <UserProfile user={user} onSignOut={handleUserSignOut} />

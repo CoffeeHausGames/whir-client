@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './SignUp.css';
 
 function SignUp(props) {
+  const [showComponent, setShowComponent] = useState(false);
   const [formData, setFormData] = useState({
     First_name: '',
     Last_name: '',
@@ -44,54 +45,67 @@ function SignUp(props) {
 
   }; 
 
+  useEffect(() => {
+    setShowComponent(true); // Show the component immediately
+
+    // Add the transition effect after a short delay
+    const transitionDelay = setTimeout(() => {
+      setShowComponent(false); // Remove the transition effect class
+    }, 100); // You can adjust the duration as needed
+
+    return () => clearTimeout(transitionDelay);
+  }, []);
+
   return (
-    <div className="sign-in-container">
+    <div className={`signup ${showComponent ? 'visible' : 'transition-effect'}`}>
+      <div className="sign-in-container">
       <h2 className="title">Join Whir</h2>
-      
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="First Name"
-          value={formData.First_name}
-          onChange={(e) =>
-            setFormData({ ...formData, First_name: e.target.value })
-          }
-          required
-          className="first custom-input"
-        />
-        <input
-          type="text"
-          placeholder="Last Name"
-          value={formData.Last_name}
-          onChange={(e) =>
-            setFormData({ ...formData, Last_name: e.target.value })
-          }
-          required
-          className="last custom-input"
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={formData.Email}
-          onChange={(e) =>
-            setFormData({ ...formData, Email: e.target.value })
-          }
-          required
-          className="custom-input"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={formData.Password}
-          onChange={(e) =>
-            setFormData({ ...formData, Password: e.target.value })
-          }
-          required
-          className="custom-input"
-        />
-        <button type="submit" className="custom-button">Sign Up</button>
-      </form>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="First Name"
+            value={formData.First_name}
+            onChange={(e) =>
+              setFormData({ ...formData, First_name: e.target.value })
+            }
+            required
+            className="first custom-input"
+          />
+          <input
+            type="text"
+            placeholder="Last Name"
+            value={formData.Last_name}
+            onChange={(e) =>
+              setFormData({ ...formData, Last_name: e.target.value })
+            }
+            required
+            className="last custom-input"
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            value={formData.Email}
+            onChange={(e) =>
+              setFormData({ ...formData, Email: e.target.value })
+            }
+            required
+            className="custom-input"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={formData.Password}
+            onChange={(e) =>
+              setFormData({ ...formData, Password: e.target.value })
+            }
+            required
+            className="custom-input"
+          />
+          <button type="submit" className="custom-button">Sign Up</button>
+        </form>
+      </div>
     </div>
+    
   );
 }
 

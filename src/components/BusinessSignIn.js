@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './SignIn.css';
 
-function SignIn({props, onBusinessSignIn, onHomeButtonClick }) {
+function BusinessSignIn(props) {
   const [showComponent, setShowComponent] = useState(false);
   const [formData, setFormData] = useState({
     Email: '',
     Password: '',
   });
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,7 +16,7 @@ function SignIn({props, onBusinessSignIn, onHomeButtonClick }) {
     // Send a POST request to your backend to handle user authentication
     // You should replace 'YOUR_BACKEND_API_URL' with your actual API endpoint.
     try {
-      const response = await fetch('http://localhost:4444/users/login', {
+      const response = await fetch('http://localhost:4444/business/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -26,16 +25,15 @@ function SignIn({props, onBusinessSignIn, onHomeButtonClick }) {
       });
 
       if (response.ok) {
-        console.log('User authenticated successfully');
+        console.log('Business authenticated successfully');
         props.onSignIn(formData);
       } else {
-        console.error('User authentication failed');
+        console.error('Business authentication failed');
       }
     } catch (error) {
       console.error('Error:', error);
     }
   };
-
 
   useEffect(() => {
     setShowComponent(true); // Show the component immediately
@@ -51,7 +49,7 @@ function SignIn({props, onBusinessSignIn, onHomeButtonClick }) {
   return (
     <div className={`signin ${showComponent ? 'visible' : 'transition-effect'}`}>    
       <div className="sign-in-container" >
-      <h2 className="title">Login</h2>
+      <h2 className="title">Welcome back!</h2>
       <h3 className="subtitle">Please sign in to continue</h3>
         <form onSubmit={handleSubmit}>
           <input
@@ -70,26 +68,20 @@ function SignIn({props, onBusinessSignIn, onHomeButtonClick }) {
             required
             className="custom-input"
           />
-
+          <button type="submit" className="alt-login">
+            Login as a customer here
+          </button>
           <button 
             type="submit" 
             className="custom-button"
             >
             Sign In
-          </button>          
-
-        </form>
-          <button 
-            type="nav" 
-            className="alt-login"
-            onClick={onBusinessSignIn}
-            >
-            Are you a merchant? Sign in here
           </button>
+        </form>
       </div>
     </div>
 
   );
 }
 
-export default SignIn;
+export default BusinessSignIn;
