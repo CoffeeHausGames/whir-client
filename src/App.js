@@ -10,6 +10,8 @@ import UserSettings from './components/UserSettings'
 import Footer from './components/Footer';
 import BusinessSignIn from './components/BusinessSignIn';
 import BusinessProfile from './components/BusinessProfile';
+import SearchScreen from './components/SearchScreen';
+
 
 function App() {
   const [activeTab, setActiveTab] = useState('home');
@@ -40,7 +42,7 @@ function App() {
 
   const handleUserSignIn = () => {
     console.log(isUserSignedIn);
-    setActiveTab('home');
+    setActiveTab('searchscreen');
     setIsUserSignedIn(true);
     console.log(isUserSignedIn);
   };
@@ -80,7 +82,7 @@ function App() {
   };
 
   const handleBusinessSignIn = () => {
-    setActiveTab('home'); // Set the active tab to 'businesssignin'
+    setActiveTab('searchscreen'); // Set the active tab to 'businesssignin'
     setIsBusinessSignedIn(true); // Set isSignedIn to true
   }
 
@@ -99,7 +101,8 @@ function App() {
       />
       {activeTab === 'signup' && <SignUp onSignUp={handleUserSignUp} />}
       {activeTab === 'signin' && <SignIn onUserSignIn={handleUserSignIn} />}
-      {activeTab === 'home' && <Home onSignIn={handleUserSignIn} />}
+      {activeTab === 'searchscreen' && <SearchScreen onSignIn={handleUserSignIn} />}
+      {!isUserSignedIn && !isBusinessSignedIn && activeTab === 'home' && <Home />}
       {activeTab === 'businesssignin' && <BusinessSignIn onBusinessSignIn={handleBusinessSignIn} />}
       {activeTab === 'usersettings' && <UserSettings onSignIn={handleUserSignIn} />}
       {activeTab === 'userprofile' && (
