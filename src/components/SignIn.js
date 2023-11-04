@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
+import './SignIn.css';
 
 function SignIn(props) {
   const [formData, setFormData] = useState({
-    First_name: '',
-    Last_name: '',
     Email: '',
     Password: '',
   });
@@ -12,7 +11,6 @@ function SignIn(props) {
     e.preventDefault();
 
     console.log('Sending sign-in request:', formData);
-
 
     // Send a POST request to your backend to handle user authentication
     // You should replace 'YOUR_BACKEND_API_URL' with your actual API endpoint.
@@ -37,28 +35,29 @@ function SignIn(props) {
   };
 
   return (
-    <div>
-      <h2>Sign In</h2>
+    <div className="sign-in-container">
+      <h2 className="title">Login</h2>
+      <h3 className="subtitle">Please sign in to continue</h3>
       <form onSubmit={handleSubmit}>
         <input
           type="email"
-          placeholder="Email"
+          placeholder=" Email"
           value={formData.Email}
-          onChange={(e) =>
-            setFormData({ ...formData, Email: e.target.value })
-          }
+          onChange={(e) => setFormData({ ...formData, Email: e.target.value })}
           required
+          className="custom-input"
         />
         <input
           type="password"
-          placeholder="Password"
+          placeholder=" Password"
           value={formData.Password}
-          onChange={(e) =>
-            setFormData({ ...formData, Password: e.target.value })
-          }
+          onChange={(e) => setFormData({ ...formData, Password: e.target.value })}
           required
+          className="custom-input"
         />
-        <button type="submit">Sign In</button>
+        <button type="submit" className="custom-button">
+          Sign In
+        </button>
       </form>
     </div>
   );

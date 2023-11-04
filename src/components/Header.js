@@ -51,7 +51,7 @@ const Header = ({ onProfileButtonClick, onSettingsButtonClick, onHomeButtonClick
   return (
     <header className={`header ${showComponent ? 'visible' : 'transition-effect'}`}>
       <div className="logo-container">
-        <img src={process.env.PUBLIC_URL + '/images/whirpng_croppedslim.png'} alt="Logo" className="logo" />
+        <img onClick={onHomeButtonClick} src={process.env.PUBLIC_URL + '/images/whirpng_croppedslim.png'} alt="Logo" className="logo" />
       </div>
       <nav className="menu">
         <button className="menu-button" onClick={onHomeButtonClick}>
@@ -76,8 +76,8 @@ const Header = ({ onProfileButtonClick, onSettingsButtonClick, onHomeButtonClick
             <button className="menu-button" onClick={onSignIn}>
               Sign In
             </button>
-            <button className="menu-button" onClick={onSignUp}>
-              Sign Up
+            <button className="join menu-button" onClick={onSignUp}>
+              Join Whir
             </button>
           </>
         )}

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './SignUp.css';
 
 function SignUp(props) {
   const [formData, setFormData] = useState({
@@ -44,8 +45,9 @@ function SignUp(props) {
   }; 
 
   return (
-    <div>
-      <h2>Sign Up</h2>
+    <div className="sign-in-container">
+      <h2 className="title">Join Whir</h2>
+      
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -55,6 +57,7 @@ function SignUp(props) {
             setFormData({ ...formData, First_name: e.target.value })
           }
           required
+          className="first custom-input"
         />
         <input
           type="text"
@@ -64,6 +67,7 @@ function SignUp(props) {
             setFormData({ ...formData, Last_name: e.target.value })
           }
           required
+          className="last custom-input"
         />
         <input
           type="email"
@@ -73,6 +77,7 @@ function SignUp(props) {
             setFormData({ ...formData, Email: e.target.value })
           }
           required
+          className="custom-input"
         />
         <input
           type="password"
@@ -82,8 +87,9 @@ function SignUp(props) {
             setFormData({ ...formData, Password: e.target.value })
           }
           required
+          className="custom-input"
         />
-        <button type="submit">Sign Up</button>
+        <button type="submit" className="custom-button">Sign Up</button>
       </form>
     </div>
   );
