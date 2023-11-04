@@ -1,0 +1,77 @@
+/* SignIn.css */
+
+.sign-in-container {
+    width: 350px; /* Adjust the width as needed */
+    margin: 0 auto; /* Center the container horizontally */
+    text-align: center; /* Center the content within the container */
+  }
+  
+  .custom-input {
+    width: 100%;
+    padding: 10px;
+    padding-right: 0;
+    margin: 10px;
+    margin-left: 0;
+    margin-right: 0;
+    border: none;
+    border-bottom: 1px solid rgb(226, 226, 226);
+    border-radius: 3px;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    color: #333;
+  }
+  
+  input[type="email"]{
+    font-family: 'Poppins', sans-serif;  
+    font-weight: 500;
+  }
+
+  input[type="password"]{
+    font-family: 'Poppins', sans-serif;  
+    font-weight: 500;
+  }
+
+  .custom-input:focus {
+    outline: none;
+    box-shadow: 3px 1px 20px 2px lightgray;
+
+  }
+  
+  .custom-button {
+    width: 100px;
+    padding: 10px;
+    margin: 15px;
+    margin-right: 0px;
+    border: 1px solid #fcde58;
+    border-radius: 40px;
+    font-family: 'Poppins', sans-serif;  
+    font-size: 15px;
+    font-weight: 700;
+    background: rgb(243,255,93);
+    background: linear-gradient(159deg, rgba(243,255,93,1) 0%, rgba(249,181,79,1) 65%, rgba(255,196,0,1) 100%);
+    color: #ffffff;
+    cursor: pointer;
+    align-items: center;
+    float: right;
+    box-shadow: 1px 1px 5px 1px #fcde58;
+  }
+  
+  .custom-button:hover {
+    background-color: #ffffff;
+  }
+
+  .title {
+    text-align: left;
+    margin-bottom: 0%; 
+    margin-left: 5px; 
+    }
+
+  .subtitle {
+    text-align: left;
+    opacity: 60%;
+    margin-top: 0%;
+    margin-bottom: 1%;
+    margin-left: 5px; 
+
+  }
+  

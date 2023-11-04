@@ -42,6 +42,7 @@ body {
   width: 120px; /* Adjust as needed */
   height: auto;
   margin-right: 10px;
+  cursor: pointer;
 }
 
 /* Menu styles */
@@ -62,6 +63,7 @@ body {
   cursor: pointer;
   text-align: center;
   text-decoration: none;
+  font-family: 'Poppins', sans-serif;
   font-size: 16px;
   transition: background-color 0.3s ease, color 0.3s ease;
   border-radius: 5px;
@@ -96,6 +98,32 @@ body {
     border-radius: 50%;
   }
 
+  .join {
+    width: 100px;
+    padding: 5px;
+    margin: 0px;
+    margin-right: 0px;
+    border: 1px solid #fcde58;
+    border-radius: 40px;
+    font-family: 'Poppins', sans-serif;  
+    font-size: 15px;
+    font-weight: 700;
+    background: rgb(243,255,93);
+    background: linear-gradient(159deg, rgba(243,255,93,1) 0%, rgba(249,181,79,1) 65%, rgba(255,196,0,1) 100%);
+    color: #ffffff;
+    cursor: pointer;
+    align-items: center;
+    float: right;
+    box-shadow: 1px 1px 5px 1px #fcde58;
+    transition: color 0.9s ease; /* Add a transition for the text color */
+
+  }
+
+  .join:hover {
+    background: #ffffff;
+    color: #f77206;
+  }
+
   .profile-image {
     width: 40px;
   }
@@ -107,7 +135,7 @@ body {
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
     right: 0; /* Align dropdown with the right edge of the button */
-    border: 1px solid #000; /* Create a thin line separating the items */
+    border: 1px solid #000000; /* Create a thin line separating the items */
     border: none;
     font-family: 'Poppins', sans-serif;  
     font-weight: 500;
