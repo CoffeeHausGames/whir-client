@@ -71,9 +71,9 @@ function BusinessSignIn({ onSignIn, onBusinessSignIn }) {
             required
             className="custom-input"
           />
-          <button type="submit" className="alt-login">
+          {/* <button type="submit" className="alt-login">
             Login as a customer here
-          </button>
+          </button> */}
           <button 
             type="submit" 
             className="custom-button"

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './SignIn.css';
 
-function SignIn({onSignIn, onBusinessSignIn }) {
+function SignIn({onUserSignIn, onBusinessSignIn }) {
   const [showComponent, setShowComponent] = useState(false);
   const [formData, setFormData] = useState({
     Email: '',
@@ -30,7 +30,7 @@ function SignIn({onSignIn, onBusinessSignIn }) {
         const responseData = await response.json(); // Parse the JSON response
         const user = { ...responseData.data, authenticated: true };
         localStorage.setItem('user', JSON.stringify(user));
-        onSignIn(formData);
+        onUserSignIn(formData);
       } else {
         console.error('User authentication failed');
       }
@@ -57,7 +57,7 @@ function SignIn({onSignIn, onBusinessSignIn }) {
       <h2 className="title">Login</h2>
       <h3 className="subtitle">Please sign in to continue</h3>
         <form onSubmit={handleSubmit}>
-          <input
+          <input 
             type="email"
             placeholder=" Email"
             value={formData.Email}
@@ -82,13 +82,13 @@ function SignIn({onSignIn, onBusinessSignIn }) {
           </button>          
 
         </form>
-          <button 
+          {/* <button 
             type="nav" 
             className="alt-login"
             onClick={onBusinessSignIn}
             >
             Are you a merchant? Sign in here
-          </button>
+          </button> */}
       </div>
     </div>
 

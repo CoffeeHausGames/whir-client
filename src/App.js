@@ -38,10 +38,11 @@ function App() {
     setActiveTab('userprofile');
   };
 
-  const handleUserSignIn = (user) => {
-    setUser(user);
+  const handleUserSignIn = () => {
+    console.log(isUserSignedIn);
     setActiveTab('home');
     setIsUserSignedIn(true);
+    console.log(isUserSignedIn);
   };
 
 
@@ -93,11 +94,11 @@ function App() {
         onSignIn={() => setActiveTab('signin')}
         onSignUp={() => setActiveTab('signup')}
         onBusinessSignIn={() => setActiveTab('businesssignin')}
-        isSignedIn={isUserSignedIn}
+        isUserSignedIn={isUserSignedIn}
         isBusinessSignedIn={isBusinessSignedIn}
       />
       {activeTab === 'signup' && <SignUp onSignUp={handleUserSignUp} />}
-      {activeTab === 'signin' && <SignIn onSignIn={handleUserSignIn} />}
+      {activeTab === 'signin' && <SignIn onUserSignIn={handleUserSignIn} />}
       {activeTab === 'home' && <Home onSignIn={handleUserSignIn} />}
       {activeTab === 'businesssignin' && <BusinessSignIn onBusinessSignIn={handleBusinessSignIn} />}
       {activeTab === 'usersettings' && <UserSettings onSignIn={handleUserSignIn} />}

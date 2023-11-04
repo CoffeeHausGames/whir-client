@@ -6,6 +6,7 @@ const Header = ({
   onProfileButtonClick,
   onBusinessProfileButtonClick,
   onBusinessSignIn,
+  onUserSignIn,
   onSettingsButtonClick,
   onHomeButtonClick,
   onSignIn,
@@ -28,12 +29,12 @@ const Header = ({
     window.location.reload();
   };
 
-  const handleProfileClick = () => {
+  const handleUserProfileClick = () => {
     if (isUserSignedIn) {
       setShowUserDropdown(!showUserDropdown);
       setShowBusinessDropdown(false); // Close business dropdown if open
     } else {
-      onSignIn();
+      onUserSignIn();
     }
   };
 
@@ -94,7 +95,7 @@ const Header = ({
         </button>
         {isUserSignedIn && (
           <div className="menu-dropdown">
-            <button className="menu-button" onClick={handleProfileClick}>
+            <button className="menu-button" onClick={handleUserProfileClick}>
               <img
                 src={process.env.PUBLIC_URL + '/images/logo192.png'}
                 alt="Logo"
@@ -105,7 +106,7 @@ const Header = ({
               <div className="dropdown-content">
                 <button
                   className="dropdown-item"
-                  onClick={() => handleProfileDropdownClick('businessprofile')}
+                  onClick={() => handleProfileDropdownClick('userprofile')}
                 >
                   Profile
                 </button>
