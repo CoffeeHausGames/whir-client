@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './SignIn.css';
 
-function BusinessSignIn(props) {
+function BusinessSignIn({ onSignIn, onBusinessSignIn }) {
   const [showComponent, setShowComponent] = useState(false);
   const [formData, setFormData] = useState({
     Email: '',
@@ -11,7 +11,7 @@ function BusinessSignIn(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log('Sending sign-in request:', formData);
+    console.log('Sending business sign-in request:', formData);
 
     // Send a POST request to your backend to handle user authentication
     // You should replace 'YOUR_BACKEND_API_URL' with your actual API endpoint.
@@ -23,12 +23,15 @@ function BusinessSignIn(props) {
         },
         body: JSON.stringify(formData),
       });
-
+    
       if (response.ok) {
         console.log('Business authenticated successfully');
-        props.onSignIn(formData);
+        const responseData = await response.json(); // Parse the JSON response
+        const business = { ...responseData.data, authenticated: true };
+        localStorage.setItem('business', JSON.stringify(business));
+        onBusinessSignIn(formData);
       } else {
-        console.error('Business authentication failed');
+        console.error('User authentication failed');
       }
     } catch (error) {
       console.error('Error:', error);
@@ -47,7 +50,7 @@ function BusinessSignIn(props) {
   }, []);
 
   return (
-    <div className={`signin ${showComponent ? 'visible' : 'transition-effect'}`}>    
+    <div className={`businesssignin ${showComponent ? 'visible' : 'transition-effect'}`}>    
       <div className="sign-in-container" >
       <h2 className="title">Welcome back!</h2>
       <h3 className="subtitle">Please sign in to continue</h3>
