@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 function SignIn(props) {
   const [formData, setFormData] = useState({
+    First_name: '',
+    Last_name: '',
     Email: '',
     Password: '',
   });

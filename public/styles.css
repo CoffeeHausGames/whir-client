@@ -1,0 +1,28 @@
+body {
+    background-image: url('images/background.jpg');
+    background-size: cover; /* Adjust the background size as needed */
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* You can use 'fixed' or 'scroll' */
+    background-color: #f0f0f0; /* A fallback background color */
+  }
+
+/*  @font-face {
+    font-family: 'Oxygen-Bold';  Replace with your font name 
+    src: url('./fonts/Oxygen-Bold.ttf') format('ttf');  Replace with the path to your font file 
+    font-weight: bold;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Oxygen-Light';  Replace with your font name 
+    src: url('./fonts/Oxygen-Light.ttf') format('ttf'); /* Replace with the path to your font file 
+    font-weight: light;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Oxygen-Regular';  Replace with your font name 
+    src: url('./fonts/Oxygen-Regular.ttf') format('ttf');  Replace with the path to your font file 
+    font-weight: normal;
+    font-style: normal;
+  } */
