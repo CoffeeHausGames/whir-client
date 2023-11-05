@@ -82,13 +82,13 @@ function SignIn({onUserSignIn, onBusinessSignIn }) {
           </button>          
 
         </form>
-          {/* <button 
+          <button 
             type="nav" 
             className="alt-login"
             onClick={onBusinessSignIn}
             >
             Are you a merchant? Sign in here
-          </button> */}
+          </button>
       </div>
     </div>
 

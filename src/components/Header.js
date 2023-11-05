@@ -3,7 +3,7 @@ import './Header.css';
 import { Link } from 'react-router-dom';
 
 const Header = ({
-  onProfileButtonClick,
+  onUserProfileButtonClick,
   onBusinessProfileButtonClick,
   onBusinessSignIn,
   onUserSignIn,
@@ -49,7 +49,7 @@ const Header = ({
 
   const handleProfileDropdownClick = (action) => {
     if (action === 'userprofile') {
-      onProfileButtonClick();
+      onUserProfileButtonClick();
     } else if (action === 'signout') {
       handleSignOut();
     } else if (action === 'usersettings') {
