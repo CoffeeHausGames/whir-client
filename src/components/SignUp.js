@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './SignUp.css';
 
 function SignUp(props) {
+  const navigate = useNavigate();
   const [showComponent, setShowComponent] = useState(false);
   const [formData, setFormData] = useState({
     First_name: '',
@@ -36,6 +38,7 @@ function SignUp(props) {
       if (response.ok) {
         console.log('User registered successfully');
         props.onSignUp(formData);
+        navigate('/searchscreen');
       } else {
         console.error('User registration failed');
       }

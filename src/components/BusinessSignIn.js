@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../AuthContext';
 import './SignIn.css';
 
-function BusinessSignIn({ onSignIn, onBusinessSignIn }) {
+function BusinessSignIn() {
+  const navigate = useNavigate();
+  const { businessSignIn } = useAuth(); // Get the signIn function from the context
   const [showComponent, setShowComponent] = useState(false);
   const [formData, setFormData] = useState({
     Email: '',
@@ -25,13 +29,14 @@ function BusinessSignIn({ onSignIn, onBusinessSignIn }) {
       });
     
       if (response.ok) {
-        console.log('Business authenticated successfully');
         const responseData = await response.json(); // Parse the JSON response
         const business = { ...responseData.data, authenticated: true };
         localStorage.setItem('business', JSON.stringify(business));
-        onBusinessSignIn(formData);
+        console.log('Business authenticated successfully');
+        businessSignIn();
+        navigate('/searchscreen');
       } else {
-        console.error('User authentication failed');
+        console.error('Business authentication failed');
       }
     } catch (error) {
       console.error('Error:', error);
