@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './UserProfile.css';
 
 function UserProfile(props) {
+  const navigate = useNavigate();
   const [showComponent, setShowComponent] = useState(false);
 
   // Retrieve user data from localStorage
@@ -15,6 +17,7 @@ function UserProfile(props) {
 
     // Reload the sign-in page
     window.location.reload();
+    navigate('/');
   };
 
   useEffect(() => {
