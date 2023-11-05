@@ -1,4 +1,3 @@
-// AuthContext.js
 import React, { createContext, useContext, useState } from 'react';
 
 const AuthContext = createContext();
@@ -8,27 +7,39 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isBusinessAuthenticated, setIsBusinessAuthenticated] = useState(false);
+    const [user, setUser] = useState(() => {
+      // Check local storage for user when component mounts
+      const user = JSON.parse(localStorage.getItem('user'));
+      return user ? { ...user, authenticated: true } : null;
+    });
+    const [businessUser, setBusinessUser] = useState(() => {
+      // Check local storage for business user when component mounts
+      const businessUser = JSON.parse(localStorage.getItem('business'));
+      return businessUser ? { ...businessUser, authenticated: true } : null;
+    });
 
   const signIn = () => {
-    setIsAuthenticated(true);
+    // Implement your authentication logic here and set the user or businessUser state accordingly
+    // For example, when a user signs in:
+    setUser({ authenticated: true });
+    // For business user:
+    setBusinessUser({ authenticated: true });
   };
 
   const signOut = () => {
-    setIsAuthenticated(false);
+    setUser(null);
   };
 
   const businessSignIn = () => {
-    setIsBusinessAuthenticated(true);
+    setBusinessUser({ authenticated: true });
   };
 
   const businessSignOut = () => {
-    setIsBusinessAuthenticated(false);
+    setBusinessUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, signIn, signOut, isBusinessAuthenticated, businessSignIn, businessSignOut }}>
+    <AuthContext.Provider value={{ user, setUser, businessUser, setBusinessUser, signIn, signOut, businessSignIn, businessSignOut }}>
       {children}
     </AuthContext.Provider>
   );

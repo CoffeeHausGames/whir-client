@@ -14,9 +14,9 @@ function SignIn() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     console.log('Sending sign-in request:', formData);
-  
+
     try {
       const response = await fetch('http://localhost:4444/users/login', {
         method: 'POST',
@@ -25,14 +25,23 @@ function SignIn() {
         },
         body: JSON.stringify(formData),
       });
-  
+
       if (response.ok) {
         const responseData = await response.json();
-        const user = { ...responseData.data, authenticated: true };
-        localStorage.setItem('user', JSON.stringify(user));
-        console.log('User Authentication Successful');
-        signIn(); // Call the signIn function to update the context
-        navigate('/searchscreen'); // Redirect to the protected route
+
+        // Replace the following line with the check you use to distinguish business users
+        if (responseData.data.userType === 'business') {
+          // Handle business user sign-in
+          console.log('Business User Authentication Successful');
+          // Business user sign-in logic
+        } else {
+          // Handle regular user sign-in
+          console.log('User Authentication Successful');
+          const user = { ...responseData.data, authenticated: true };
+          localStorage.setItem('user', JSON.stringify(user));
+          signIn(); // Call the signIn function to update the context
+          navigate('/searchscreen'); // Redirect to the protected route
+        }
       } else {
         console.error('User authentication failed');
       }
