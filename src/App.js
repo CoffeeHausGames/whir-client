@@ -8,7 +8,7 @@ import Home from './components/Home';
 import UserSettings from './components/UserSettings';
 import UserProfile from './components/UserProfile';
 import BusinessSignIn from './components/BusinessSignIn';
-import BusinessProfile from './components/BusinessProfile';
+// import BusinessProfile from './components/BusinessProfile';
 import SearchScreen from './components/SearchScreen';
 import Footer from './components/Footer';
 import { AuthProvider } from './AuthContext'; // Import AuthProvider
@@ -26,7 +26,7 @@ function App() {
             <Route path="/businesssignin" element={<BusinessSignIn />} />
             <Route path="/usersettings" element={<UserSettings />} />
             <Route path="/userprofile" element={<UserProfile />} />
-            <Route path="/businessprofile" element={<BusinessProfile />} />
+            {/* <Route path="/businessprofile" element={<BusinessProfile />} /> */}
             <Route path="/searchscreen" element={<SearchScreen />} />
             <Route path="*" element={<Home />} />
           </Routes>
