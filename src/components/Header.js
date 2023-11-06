@@ -9,14 +9,19 @@ const Header = () => {
 
   useEffect(() => {
     const handleStorageChange = () => {
-      // Your existing code for regular user authentication
-      const user = JSON.parse(localStorage.getItem('user'));
+      // Handle changes in localStorage data for user and business user
+      const userStorageData = localStorage.getItem('user');
+      const businessUserStorageData = localStorage.getItem('business');
+
+      // Parse JSON data only if it exists
+      const user = userStorageData ? JSON.parse(userStorageData) : null;
+      const businessUser = businessUserStorageData ? JSON.parse(businessUserStorageData) : null;
+
+      // Check if the parsed data is authenticated
       if (user && user.authenticated) {
         console.log('Regular User is authenticated');
       }
 
-      // Your existing code for business user authentication
-      const businessUser = JSON.parse(localStorage.getItem('business'));
       if (businessUser && businessUser.authenticated) {
         console.log('Business User is authenticated');
       }
@@ -28,9 +33,6 @@ const Header = () => {
       window.removeEventListener('storage', handleStorageChange);
     };
   }, []);
-
-  console.log(JSON.parse(localStorage.getItem('business')));
-  console.log(JSON.parse(localStorage.getItem('user')));
 
   const handleUserProfileClick = () => {
     setShowUserDropdown(!showUserDropdown);
@@ -46,10 +48,10 @@ const Header = () => {
   const handleBusinessSignOut = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('refreshToken');
-
     setBusinessUser(null);
     businessSignOut();
   };
+
 
   return (
     <header className="header">
