@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SignUp.css';
 
-function SignUp(props) {
+function SignUp() {
   const navigate = useNavigate();
   const [showComponent, setShowComponent] = useState(false);
   const [formData, setFormData] = useState({
@@ -14,7 +14,6 @@ function SignUp(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
 
     // Log before sending the request
     console.log('Sending sign-up request:', formData);
@@ -37,16 +36,14 @@ function SignUp(props) {
 
       if (response.ok) {
         console.log('User registered successfully');
-        props.onSignUp(formData);
-        navigate('/searchscreen');
+        navigate('/successscreen');
       } else {
         console.error('User registration failed');
       }
     } catch (error) {
       console.error('Error:', error);
     }
-
-  }; 
+  };
 
   useEffect(() => {
     setShowComponent(true); // Show the component immediately
@@ -62,7 +59,7 @@ function SignUp(props) {
   return (
     <div className={`signup ${showComponent ? 'visible' : 'transition-effect'}`}>
       <div className="sign-in-container">
-      <h2 className="title">Join Whir</h2>
+        <h2 className="title">Join Whir</h2>
         <form onSubmit={handleSubmit}>
           <input
             type="text"
@@ -104,11 +101,22 @@ function SignUp(props) {
             required
             className="custom-input"
           />
-          <button type="submit" className="custom-button">Sign Up</button>
+          <button type="submit" className="custom-button">
+            Sign Up
+          </button>
         </form>
+        <button
+          type="button"
+          className="alt-login"
+          onClick={() => {
+            // Handle business sign-in or navigation here
+            navigate('/businesssignup');
+          }}
+        >
+          Are you a merchant? Register here
+        </button>
       </div>
     </div>
-    
   );
 }
 

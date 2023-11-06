@@ -58,10 +58,10 @@ const handleBusinessSignOut = () => {
      src={process.env.PUBLIC_URL + '/images/whirpng_croppedslim.png'}
      alt="Logo"
      className="logo"
+     onClick={() => navigate('/home')} // Navigate to 'home' when the logo is clicked
     />
    </div>
    <nav className="menu">
-    <button className="menu-button" onClick={() => navigate('/home')}>Home</button>
     {(user && user.authenticated) || (businessUser && businessUser.authenticated) || isBusinessUserAuthenticated ? (
      <div className="menu-dropdown">
       <button className="menu-button" onClick={handleUserProfileClick}>
