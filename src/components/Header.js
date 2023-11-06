@@ -73,7 +73,7 @@ const handleBusinessSignOut = () => {
       </button>
       {showUserDropdown && (
        <div className="dropdown-content">
-        <button className="dropdown-item" onClick={() => navigate(businessUser ? "/profile" : "/userprofile")}>Profile</button>
+        <button className="dropdown-item" onClick={() => navigate(businessUser ? "/userprofile" : "/userprofile")}>Profile</button>
         <button className="dropdown-item" onClick={() => navigate(businessUser ? "/settings" : "/usersettings")}>Settings</button>
         <button className="dropdown-item" onClick={businessUser ? handleBusinessSignOut : handleSignOut}>
          Log Out
