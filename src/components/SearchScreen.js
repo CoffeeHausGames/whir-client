@@ -12,11 +12,16 @@ function SearchScreen() {
   useEffect(() => {
     const fetchSearchResults = async () => {
       try {
+        if (!/^\d{5}$/.test(searchQuery)) {
+          setError('Please enter a valid 5-digit ZIP code.');
+          return;
+        }
+
         const requestBody = {
-          query: searchQuery,
+          zipCode: searchQuery,
         };
 
-        const response = await fetch('http://localhost:4444/business/search', {
+        const response = await fetch('http://localhost:4444/business', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -28,15 +33,16 @@ function SearchScreen() {
           throw new Error('Request failed with status ' + response.status);
         }
 
-        const data = await response.json();
+        const responseData = await response.json();
 
-        if (Array.isArray(data.data) && data.data.length > 0) {
-          // Extract and filter business names based on the search query
-          const filteredResults = data.data
-            .map((item) => item.business_name)
-            .filter((name) =>
-              name.toLowerCase().includes(searchQuery.toLowerCase())
-            );
+        // Check if the "data" array exists in the response
+        if (Array.isArray(responseData.data)) {
+          // Filter business names based on the search query
+          const filteredResults = responseData.data
+            .filter((item) =>
+              item.zipCode === searchQuery && item.business_name
+            )
+            .map((item) => item.business_name);
 
           if (filteredResults.length > 0) {
             setSearchResults(filteredResults);
@@ -58,7 +64,7 @@ function SearchScreen() {
 
   return (
     <div>
-      <div className="search-input">
+      <div className="search-container">
         <img
           src={process.env.PUBLIC_URL + '/images/search.svg'}
           alt="searchicon"
@@ -67,7 +73,7 @@ function SearchScreen() {
         <input
           className="main-search"
           type="text"
-          placeholder="What are you looking for?"
+          placeholder="Enter ZIP code to find businesses nearby"
           value={searchQuery}
           onChange={handleSearchQueryChange}
         />
