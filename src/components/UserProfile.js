@@ -46,8 +46,7 @@ function UserProfile(props) {
       {business && (
         <>
           <p>Business Name: {business.business_name}</p>
-          <p>Address: {business.address}</p>
-          <p>Zip Code: {business.zip_code}</p>
+          <p>Address: {`${business.address.street}, ${business.address.city}, ${business.address.state} ${business.address.postalCode}, ${business.address.country}`}</p>
           <p>Deals: {business.deal}</p>
           <p>Description: {business.description}</p>
         </>
