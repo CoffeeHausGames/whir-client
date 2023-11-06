@@ -22,19 +22,32 @@ function BusinessSignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Concatenate the address fields into a single street address string
+    // const Address = `${formData.Street}, ${formData.City}, ${formData.State} ${formData.PostalCode}, ${formData.Country}`;
+    const formDataWithAddress = {
+        ...formData,
+        address: {
+          street: formData.Street,
+          city: formData.City,
+          state: formData.State,
+          postalCode: formData.PostalCode,
+          country: formData.Country,
+        },
+      };
+
     // Log before sending the request
     console.log('Sending sign-up request:', formData);
 
     // Send a POST request to your backend to handle user registration
     // You should replace 'YOUR_BACKEND_API_URL' with your actual API endpoint.
     try {
-      const response = await fetch('http://localhost:4444/business/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+        const response = await fetch('http://localhost:4444/business/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formDataWithAddress),
+        });
 
       // Log the response status and data
       console.log('Response status:', response.status);
