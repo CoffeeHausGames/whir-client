@@ -12,6 +12,8 @@ import SearchScreen from './components/SearchScreen';
 import Footer from './components/Footer';
 import BusinessSignUp from './components/BusinessSignUp';
 import SuccessScreen from './components/SuccessScreen';
+import BusinessDealManager from './components/BusinessDealManager';
+import BusinessDashboard from './components/BusinessDashboard';
 import { AuthProvider } from './AuthContext'; // Import AuthProvider
 
 function App() {
@@ -30,6 +32,8 @@ function App() {
             <Route path="/usersettings" element={<UserSettings />} />
             <Route path="/userprofile" element={<UserProfile />} />
             <Route path="/searchscreen" element={<SearchScreen />} />
+            <Route path="businessdealmanager" element={<BusinessDealManager />} />
+            <Route path="businessdashboard" element={<BusinessDashboard />} />
             <Route path="*" element={<Home />} />
           </Routes>
           <Footer />
