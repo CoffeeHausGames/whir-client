@@ -5,7 +5,7 @@ import './SignIn.css';
 
 function SignIn() {
   const navigate = useNavigate();
-  const { signIn } = useAuth(); // Get the signIn function from the context
+  const { user, signIn } = useAuth(); // Get the signIn function from the context
   const [showComponent, setShowComponent] = useState(false);
   const [formData, setFormData] = useState({
     Email: '',
@@ -14,8 +14,13 @@ function SignIn() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+   
     console.log('Sending sign-in request:', formData);
+   
+    if (user && user.authenticated) {
+      console.error('A user is already authenticated');
+      return;
+    }
 
     try {
       const response = await fetch('http://localhost:4444/users/login', {

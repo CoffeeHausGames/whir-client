@@ -5,7 +5,7 @@ import './SignIn.css';
 
 function BusinessSignIn() {
   const navigate = useNavigate();
-  const { businessSignIn } = useAuth(); // Get the signIn function from the context
+  const { businessUser, businessSignIn } = useAuth(); // Get the signIn function from the context
   const [showComponent, setShowComponent] = useState(false);
   const [formData, setFormData] = useState({
     Email: '',
@@ -14,8 +14,13 @@ function BusinessSignIn() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+   
     console.log('Sending business sign-in request:', formData);
+   
+    if (businessUser && businessUser.authenticated) {
+      console.error('A business user is already authenticated');
+      return;
+    }
 
     // Send a POST request to your backend to handle user authentication
     // You should replace 'YOUR_BACKEND_API_URL' with your actual API endpoint.
