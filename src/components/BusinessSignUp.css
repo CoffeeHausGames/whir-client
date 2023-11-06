@@ -7,3 +7,46 @@
 .custom-input {
     font-family: 'Poppins', sans-serif;  
 }
+
+.drop-input {
+    width: 100%;
+    padding: 10px;
+    padding-right: 0;
+    margin: 10px;
+    margin-left: 0;
+    margin-right: 0;
+    border: none;
+    border-bottom: 1px solid rgb(226, 226, 226);
+    border-radius: 3px;
+    font-family: 'Poppins', sans-serif;  
+    font-size: 16px;
+    background-color: #f9f9f9;
+    color: #333;
+  }
+
+  .custom-select {
+    position: relative;
+  }
+
+  .drop-input:after {
+    position: absolute;
+    content: "";
+    top: 14px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: #fff transparent transparent transparent;
+  }
+
+  /* Point the arrow upwards when the select box is open (active): */
+.drop-input.select-arrow-active:after {
+    border-color: transparent transparent #fff transparent;
+    top: 7px;
+  }
+
+.address-title {
+  text-align: left;
+  font-weight: 500;
+  font-size: 18px;
+}

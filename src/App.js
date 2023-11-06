@@ -8,25 +8,27 @@ import Home from './components/Home';
 import UserSettings from './components/UserSettings';
 import UserProfile from './components/UserProfile';
 import BusinessSignIn from './components/BusinessSignIn';
-// import BusinessProfile from './components/BusinessProfile';
 import SearchScreen from './components/SearchScreen';
 import Footer from './components/Footer';
+import BusinessSignUp from './components/BusinessSignUp';
+import SuccessScreen from './components/SuccessScreen';
 import { AuthProvider } from './AuthContext'; // Import AuthProvider
 
 function App() {
   return (
-    <AuthProvider> {/* Wrap your entire app with AuthProvider */}
+    <AuthProvider> 
       <Router>
         <div className="App">
           <Header />
           <Routes>
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/businesssignup" element={<BusinessSignUp />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/home" element={<Home />} />
             <Route path="/businesssignin" element={<BusinessSignIn />} />
+            <Route path="/successscreen" element={<SuccessScreen />} />
             <Route path="/usersettings" element={<UserSettings />} />
             <Route path="/userprofile" element={<UserProfile />} />
-            {/* <Route path="/businessprofile" element={<BusinessProfile />} /> */}
             <Route path="/searchscreen" element={<SearchScreen />} />
             <Route path="*" element={<Home />} />
           </Routes>
