@@ -110,8 +110,11 @@ const BusinessDealManager = () => {
             onChange={(e) => setRepeating(e.target.value)}
           >
             <option value="">Select an option</option>
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
+            <option value="Daily">Daily</option>
+            <option value="Weekly">Weekly</option>
+            <option value="Monthly">Monthly</option>
+            <option value="Custom">Custom</option>
+
           </select>
 
           <label className="item description-label">Description:</label>

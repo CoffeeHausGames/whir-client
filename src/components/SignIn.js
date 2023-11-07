@@ -87,20 +87,20 @@ function SignIn() {
             required
             className="custom-input"
           />
-          <button type="submit" className="custom-button">
-            Sign In
-          </button>
-        </form>
-        <button
+          <button
           type="button"
           className="alt-login"
           onClick={() => {
             // Handle business sign-in or navigation here
             navigate('/businesssignin');
-          }}
-        >
-          Are you a merchant? Sign in here
-        </button>
+          }}>
+            Are you a merchant? Sign in here
+          </button>
+          <button type="submit" className="custom-button">
+            Sign In
+          </button>
+        </form>
+
       </div>
     </div>
   );
