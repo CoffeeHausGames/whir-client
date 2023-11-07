@@ -1,8 +1,9 @@
 /* Footer.css */
 .footer {
-    position: fixed;
+    position: absolute;
     bottom: 0;
     left: 0;
+    right: 0;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.4);    color: #fff;
     padding: 5px 0;
@@ -20,4 +21,6 @@
     margin-top: 10px;
     font-size: small;
   }
+  
+
   

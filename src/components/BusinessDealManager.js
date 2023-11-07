@@ -26,6 +26,11 @@ const BusinessDealManager = () => {
 
   return (
     <div className="business-deal-manager">
+      <div className="deal-manager-header">
+        <h1 className="deal-manager-title">
+          Manage your Deals
+        </h1>
+      </div>
       {!showForm && (
         <button className="add-deal-button" onClick={handleAddDeal}>
           Add Deal
