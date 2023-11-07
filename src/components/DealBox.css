@@ -1,0 +1,23 @@
+.deal-box {
+    outline: 1px solid black;
+    outline-style: solid;
+    background-color: rgb(255, 255, 255);
+    margin: 40px;
+    padding: 2%; /* Keep the padding at 20% */
+    border-radius: 5px;
+    overflow-y: auto; /* Add this line */
+    height: 50vh; /* Add this line */
+  }
+  
+  .deal {
+    display: block;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid black; /* Add this line */
+  }
+
+  .deal:not(:last-child) {
+    border-bottom: 1px solid black;
+  }
+  
+  
