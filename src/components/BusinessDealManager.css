@@ -48,3 +48,26 @@
     display: block;
 
   }
+
+  .add-deal-button {
+    width: 100px;
+    margin-left: 20px;
+    background-color: transparent;
+    border-radius: 20px;
+    font-family: 'Poppins', sans-serif;  
+    cursor: pointer;
+    border: 1px solid black;
+    padding: 5px;
+    background-color: #f9f9f9;
+    transition: 0.5s;
+  }
+
+  .add-deal-button:hover {
+    background: linear-gradient(159deg, rgba(243,255,93,1) 0%, rgba(249,181,79,1) 65%, rgba(255,196,0,1) 100%);
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  }
+
+  .deal-manager-title {
+    text-align: left;
+    padding: 20px
+  }
