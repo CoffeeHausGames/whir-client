@@ -101,11 +101,7 @@ function SignUp() {
             required
             className="custom-input"
           />
-          <button type="submit" className="custom-button">
-            Sign Up
-          </button>
-        </form>
-        <button
+          <button
           type="button"
           className="alt-login"
           onClick={() => {
@@ -115,6 +111,11 @@ function SignUp() {
         >
           Are you a merchant? Register here
         </button>
+          <button type="submit" className="custom-button">
+            Sign Up
+          </button>
+        </form>
+
       </div>
     </div>
   );

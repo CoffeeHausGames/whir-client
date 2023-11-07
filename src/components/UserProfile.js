@@ -19,8 +19,8 @@ function UserProfile(props) {
     localStorage.removeItem('business');
 
     // Reload the sign-in page
+        navigate('/home');
     window.location.reload();
-    navigate('/');
   };
 
   useEffect(() => {

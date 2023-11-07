@@ -26,6 +26,7 @@
 
   .custom-select {
     position: relative;
+    margin-bottom: 25%;
   }
 
   .drop-input:after {
@@ -50,3 +51,4 @@
   font-weight: 500;
   font-size: 18px;
 }
+

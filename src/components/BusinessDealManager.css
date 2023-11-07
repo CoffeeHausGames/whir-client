@@ -14,13 +14,9 @@
     margin-left: 5%;
   }
 
-  .deeal-start-label {
-    width: 30px;
-  }
-
   .input {
     display: block;
-    width: 95%;
+    width: 400px;
     padding: 10px;
     padding-right: 10px;
     margin: 10px;
@@ -32,6 +28,18 @@
     font-size: 16px;
     background-color: #f9f9f9;
     color: #333;
+  }
+
+  .deal-start-input {
+    width: 250px;
+  }
+
+  .deal-end-input {
+    width: 250px;
+  }
+
+  .day-of-week-select {
+    width: 180px;
   }
 
   .input.description-input {
