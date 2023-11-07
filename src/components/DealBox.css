@@ -14,10 +14,27 @@
     padding: 10px;
     text-align: left;
     border-bottom: 1px solid black; /* Add this line */
+    font-size: small;
   }
 
   .deal:not(:last-child) {
     border-bottom: 1px solid black;
+  }
+
+  .deal-button {
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    background-color: white;
+    border: none;
+    border-radius: 5px;
+    transition: 0.3s;
+    padding: 5px;
+    border-bottom: 1px solid lightgray;
+  }
+
+  .deal-button:hover {
+    background-color: lightgray;
   }
   
   
