@@ -1,59 +1,85 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 import './BusinessDealManager.css';
 import DealBox from './DealBox';
+import CustomRepeatModal from './CustomRepeatModal';
 
 const BusinessDealManager = () => {
- const [showForm, setShowForm] = useState(false);
- const [dealName, setDealName] = useState('');
- const [dealStart, setDealStart] = useState('');
- const [dealEnd, setDealEnd] = useState('');
- const [dayOfWeek, setDayOfWeek] = useState('');
- const [repeating, setRepeating] = useState('');
- const [description, setDescription] = useState('');
+  const [showForm, setShowForm] = useState(false);
+  const [dealName, setDealName] = useState('');
+  const [dealStart, setDealStart] = useState('');
+  const [dealEnd, setDealEnd] = useState('');
+  const [dayOfWeek, setDayOfWeek] = useState('');
+  const [repeating, setRepeating] = useState('');
+  const [description, setDescription] = useState('');
+  const [showDealBox, setShowDealBox] = useState(true);
+  const [customRepeatModal, setCustomRepeatModal] = useState(false);
+  const [customRepeatConfig, setCustomRepeatConfig] = useState({
+    startDate: '',
+    repeatEvery: { value: '1', unit: 'day' },
+    endDate: '',
+    days: [],
+  });
+  const toggleCustomRepeatModal = () => {
+    setCustomRepeatModal(!customRepeatModal);
+  };
 
- // Insert the deals directly into the deals state
- const [deals, setDeals] = useState([
-   { id: 1, name: 'Deal 1', description: 'Description 1' },
-   { id: 2, name: 'Deal 2', description: 'Description 2' },
-   // Add more deals here...
- ]);
+  const handleSaveDeal = () => {
+    // Create a new deal object from the form data
+    const newDeal = {
+      name: dealName,
+      start_time: dealStart,
+      end_time: dealEnd,
+      day_of_week: dayOfWeek,
+      run_time: repeating,
+      description: description,
+      customRepeat: customRepeatConfig, // Add custom repeat configuration
+    };
 
- const [showDealBox, setShowDealBox] = useState(true);
+    // Make a PUT request to update the user's "Deals" array
+    fetch(`/api/business/deals`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newDeal),
+    })
+      .then((response) => response.json())
+      .then((updatedDeals) => {
+        // Handle the response if needed
+        console.log('User Deals updated:', updatedDeals);
 
- useEffect(() => {
-   fetch('APICODEHERE')
-     .then(response => response.json())
-     .then(data => {
-       setDeals(data);
-     })
-     .catch(error => {
-       console.error('Error fetching deals:', error);
-     });
- }, []);
+        // Reset the form fields and hide the form
+        setDealName('');
+        setDealStart('');
+        setDealEnd('');
+        setDayOfWeek('');
+        setRepeating('');
+        setDescription('');
 
- const handleSaveDeal = () => {
-   // Use an API call to save the deal information to the backend
-   // You can use libraries like axios to make the API call
-   // Example: axios.post('/api/deals', { name: dealName, start_time: dealStart, ... })
- };
+        // Show the DealBox with the updated deals
+        setShowForm(false);
+        setShowDealBox(true);
+      })
+      .catch((error) => {
+        console.error('Error updating user deals:', error);
+      });
+  };
 
- const handleAddDeal = () => {
-   setShowDealBox(false);
-   setShowForm(true);
- };
+  const handleAddDeal = () => {
+    setShowDealBox(false);
+    setShowForm(true);
+  };
 
- const handleCancel = () => {
-   setShowDealBox(true);
-   setShowForm(false);
- };
-
+  const handleCancel = () => {
+    setShowDealBox(true);
+    setShowForm(false);
+  };
 
   return (
     <div className="business-deal-manager">
       <div className="deal-manager-header">
-        <h1 className="deal-manager-title">
-          Manage your Deals
-        </h1>
+        <h1 className="deal-manager-title">Manage your Deals</h1>
       </div>
       {!showForm && (
         <button className="add-deal-button" onClick={handleAddDeal}>
@@ -87,34 +113,23 @@ const BusinessDealManager = () => {
             onChange={(e) => setDealEnd(e.target.value)}
           />
 
-          <label className="item day-of-week-label">Day of Week:</label>
-          <select
-            className="input day-of-week-select"
-            value={dayOfWeek}
-            onChange={(e) => setDayOfWeek(e.target.value)}
-          >
-            <option value="">Select a day</option>
-            <option value="Monday">Monday</option>
-            <option value="Tuesday">Tuesday</option>
-            <option value="Wednesday">Wednesday</option>
-            <option value="Thursday">Thursday</option>
-            <option value="Friday">Friday</option>
-            <option value="Saturday">Saturday</option>
-            <option value="Sunday">Sunday</option>
-          </select>
-
           <label className="item repeating-label">Repeating:</label>
           <select
             className="input repeating-select"
             value={repeating}
-            onChange={(e) => setRepeating(e.target.value)}
-          >
+            onChange={(e) => {
+              setRepeating(e.target.value);
+              if (e.target.value === 'Custom') {
+                setCustomRepeatModal(true);
+              }
+            }}
+            >
             <option value="">Select an option</option>
             <option value="Daily">Daily</option>
             <option value="Weekly">Weekly</option>
             <option value="Monthly">Monthly</option>
+            <option value="Yearly">Yearly</option>
             <option value="Custom">Custom</option>
-
           </select>
 
           <label className="item description-label">Description:</label>
@@ -133,12 +148,18 @@ const BusinessDealManager = () => {
               Cancel
             </button>
           </div>
-
         </>
       )}
-         {showDealBox && (
-           <DealBox />
-         )}
+      {showDealBox && <DealBox />}
+      {customRepeatModal && (
+       <CustomRepeatModal
+         isOpen={customRepeatModal}
+         onRequestClose={toggleCustomRepeatModal}
+         customRepeatConfig={customRepeatConfig}
+         setCustomRepeatConfig={setCustomRepeatConfig}
+         toggleCustomRepeatModal={toggleCustomRepeatModal}
+       />
+     )}
     </div>
   );
 };

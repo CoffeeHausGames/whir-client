@@ -1,0 +1,38 @@
+.custom-repeat-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+  }
+  
+  .custom-repeat-modal {
+    background: #fff;
+    border-radius: 5px;
+    padding: 50px;
+    max-width: 400px;
+    width: 100%;
+    z-index: 1001;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  
+  .custom-repeat-overlay.open {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .custom-repeat-modal.open {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
