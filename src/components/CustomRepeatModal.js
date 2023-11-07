@@ -2,8 +2,18 @@ import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './CustomRepeatModal.css';
 
-const CustomRepeatModal = ({ isOpen, onRequestClose, customRepeatConfig, setCustomRepeatConfig, toggleCustomRepeatModal }) => {
-  // Create a new div element to serve as the portal container
+const CustomRepeatModal = ({
+  isOpen,
+  onRequestClose,
+  customRepeatConfig,
+  setCustomRepeatConfig,
+  toggleCustomRepeatModal,
+  dealName,
+  description,
+  setDealName,
+  setDescription,
+  handleSaveDeal,
+}) => {
   const el = document.createElement('div');
 
   useEffect(() => {
@@ -13,24 +23,18 @@ const CustomRepeatModal = ({ isOpen, onRequestClose, customRepeatConfig, setCust
     };
   }, [el]);
 
-  // An array of days of the week
   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-  // Set the default unit to "week"
-  if (!customRepeatConfig.repeatEvery.unit) {
-    setCustomRepeatConfig({
-      ...customRepeatConfig,
-      repeatEvery: {
-        ...customRepeatConfig.repeatEvery,
-        unit: 'week',
-      },
-    });
-  }
-
-  // Render the modal into the new div
   return ReactDOM.createPortal(
     <div className={`custom-repeat-overlay ${isOpen ? 'open' : ''}`} onClick={onRequestClose}>
       <div className={`custom-repeat-modal ${isOpen ? 'open' : ''}`} onClick={(e) => e.stopPropagation()}>
+        <label>Deal Name:</label>
+        <input
+          type="text"
+          value={dealName}
+          onChange={(e) => setDealName(e.target.value)}
+        />
+
         <label>Start Date:</label>
         <input
           type="date"
@@ -38,39 +42,26 @@ const CustomRepeatModal = ({ isOpen, onRequestClose, customRepeatConfig, setCust
           onChange={(e) => setCustomRepeatConfig({ ...customRepeatConfig, startDate: e.target.value })}
         />
 
-        <label>Repeat Every:</label>
-        <div className="repeat-every-section">
-          <select
-            value={customRepeatConfig.repeatEvery.value}
-            onChange={(e) =>
-              setCustomRepeatConfig({
-                ...customRepeatConfig,
-                repeatEvery: { ...customRepeatConfig.repeatEvery, value: e.target.value },
-              })
-            }
-          >
-            {/* Include options 1-99 */}
-            {Array.from({ length: 99 }, (_, i) => (
-              <option key={i + 1} value={String(i + 1)}>
-                {i + 1}
-              </option>
-            ))}
-          </select>
-          <select
-            value={customRepeatConfig.repeatEvery.unit}
-            onChange={(e) =>
-              setCustomRepeatConfig({
-                ...customRepeatConfig,
-                repeatEvery: { ...customRepeatConfig.repeatEvery, unit: e.target.value },
-              })
-            }
-          >
-            <option value="day">Day(s)</option>
-            <option value="week">Week(s)</option>
-            <option value="month">Month(s)</option>
-            <option value="year">Year(s)</option>
-          </select>
-        </div>
+        <label>End Date:</label>
+        <input
+          type="date"
+          value={customRepeatConfig.endDate}
+          onChange={(e) => setCustomRepeatConfig({ ...customRepeatConfig, endDate: e.target.value })}
+        />
+
+        <label>Start Time:</label>
+        <input
+          type="time"
+          value={customRepeatConfig.startTime}
+          onChange={(e) => setCustomRepeatConfig({ ...customRepeatConfig, startTime: e.target.value })}
+        />
+
+        <label>End Time:</label>
+        <input
+          type="time"
+          value={customRepeatConfig.endTime}
+          onChange={(e) => setCustomRepeatConfig({ ...customRepeatConfig, endTime: e.target.value })}
+        />
 
         <div className="day-selection">
           <label>Select Days:</label>
@@ -100,17 +91,14 @@ const CustomRepeatModal = ({ isOpen, onRequestClose, customRepeatConfig, setCust
           </div>
         </div>
 
-        <div className="occurs-text">
-          Occurs every {customRepeatConfig.repeatEvery.value} {customRepeatConfig.repeatEvery.unit} until
-        </div>
-
+        <label>Description:</label>
         <input
-          type="date"
-          value={customRepeatConfig.endDate}
-          onChange={(e) => setCustomRepeatConfig({ ...customRepeatConfig, endDate: e.target.value })}
+          type="text"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         />
 
-        <button onClick={toggleCustomRepeatModal}>Save</button>
+        <button onClick={handleSaveDeal}>Save</button>
       </div>
     </div>,
     el
