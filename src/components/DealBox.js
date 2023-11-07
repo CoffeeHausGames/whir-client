@@ -26,13 +26,18 @@ const DealBox = () => {
       });
   }, []);
 
+  const handleDealClick = (deal) => {
+    console.log('Deal clicked:', deal);
+    // Perform an action when a deal is clicked
+  };
+
   return (
     <div className="deal-box placeholder">
       {deals.map((deal, index) => (
-        <div className="deal" key={index}>
+        <button className="deal-button" key={index} onClick={() => handleDealClick(deal)}>
           <h2>{deal.name}</h2>
           <p>{deal.description}</p>
-        </div>
+        </button>
       ))}
     </div>
   );
