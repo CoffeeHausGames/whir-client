@@ -29,7 +29,7 @@ const CustomRepeatModal = ({
     const updatedDays = customRepeatConfig.days.includes(day)
       ? customRepeatConfig.days.filter((selectedDay) => selectedDay !== day)
       : [...customRepeatConfig.days, day];
-  
+
     setCustomRepeatConfig({ ...customRepeatConfig, days: updatedDays });
   };
 
@@ -60,7 +60,10 @@ const CustomRepeatModal = ({
         <input
           type="text"
           value={dealName}
-          onChange={(e) => setDealName(e.target.value)}
+          // onChange={(e) => setDealName(e.target.value)}I have no idea why this isn't working but it will only let me input one character at a time
+          onChange={() => setDealName()}
+          maxLength={75} // Set the maximum length to 75 characters
+          minLength={2}
         />
 
         <div className="input-group">
@@ -114,13 +117,18 @@ const CustomRepeatModal = ({
         <input
           type="text"
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          // onChange={(e) => setDescription(e.target.value)} I have no idea why this isn't working but it will only let me input one character at a time
+          onChange={() => setDescription()}
+          maxLength={500} // Set the maximum length to 500 characters
         />
-        <div className="button-group">        
-          <button className="modal-save" onClick={handleSaveDeal}>Save</button>
-          <button className="modal-cancel" onClick={resetModal}>Cancel</button>
+        <div className="button-group">
+          <button className="modal-save" onClick={handleSaveDeal}>
+            Save
+          </button>
+          <button className="modal-cancel" onClick={resetModal}>
+            Cancel
+          </button>
         </div>
-
       </div>
     </div>,
     el
