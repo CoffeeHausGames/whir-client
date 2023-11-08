@@ -4,6 +4,7 @@ import DealBox from './DealBox';
 import CustomRepeatModal from './CustomRepeatModal';
 
 const BusinessDealManager = () => {
+  // State variables for managing the form and modal
   const [showForm, setShowForm] = useState(false);
   const [dealName, setDealName] = useState('');
   const [dealStart, setDealStart] = useState('');
@@ -12,6 +13,8 @@ const BusinessDealManager = () => {
   const [repeating, setRepeating] = useState('');
   const [description, setDescription] = useState('');
   const [showDealBox, setShowDealBox] = useState(true);
+
+  // Custom repeat modal state and functions
   const [customRepeatModal, setCustomRepeatModal] = useState(false);
   const [customRepeatConfig, setCustomRepeatConfig] = useState({
     startDate: '',
@@ -19,7 +22,7 @@ const BusinessDealManager = () => {
     endDate: '',
     days: [],
   });
-  
+
   const toggleCustomRepeatModal = () => {
     setCustomRepeatModal(!customRepeatModal);
   };
@@ -72,8 +75,18 @@ const BusinessDealManager = () => {
   };
 
   const handleCancel = () => {
-    setShowDealBox(true);
+    // Close the custom repeat modal and clear its configuration
+    setCustomRepeatModal(false);
+    setCustomRepeatConfig({
+      startDate: '',
+      repeatEvery: { value: '1', unit: 'day' },
+      endDate: '',
+      days: [],
+    });
+
+    // Show the DealBox
     setShowForm(false);
+    setShowDealBox(true);
   };
 
   return (
@@ -81,6 +94,7 @@ const BusinessDealManager = () => {
       <div className="deal-manager-header">
         <h1 className="deal-manager-title">Manage your Deals</h1>
       </div>
+
       {!showForm && (
         <button className="add-deal-button" onClick={handleAddDeal}>
           Add Deal
@@ -106,7 +120,7 @@ const BusinessDealManager = () => {
       {customRepeatModal && (
         <CustomRepeatModal
           isOpen={customRepeatModal}
-          onRequestClose={toggleCustomRepeatModal}
+          onRequestClose={handleCancel}
           customRepeatConfig={customRepeatConfig}
           setCustomRepeatConfig={setCustomRepeatConfig}
           toggleCustomRepeatModal={toggleCustomRepeatModal}
