@@ -70,7 +70,7 @@ const BusinessDealManager = () => {
   };
 
   const handleAddDeal = () => {
-    setShowDealBox(false);
+    // Set showForm to true to render the CustomRepeatModal
     setShowForm(true);
   };
 
@@ -117,20 +117,6 @@ const BusinessDealManager = () => {
       )}
 
       {showDealBox && <DealBox />}
-      {customRepeatModal && (
-        <CustomRepeatModal
-          isOpen={customRepeatModal}
-          onRequestClose={handleCancel}
-          customRepeatConfig={customRepeatConfig}
-          setCustomRepeatConfig={setCustomRepeatConfig}
-          toggleCustomRepeatModal={toggleCustomRepeatModal}
-          dealName={dealName}
-          description={description}
-          setDealName={setDealName}
-          setDescription={setDescription}
-          handleSaveDeal={handleSaveDeal}
-        />
-      )}
     </div>
   );
 };
