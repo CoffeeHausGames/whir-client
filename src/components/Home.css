@@ -55,7 +55,7 @@
 .main-img {
   position: relative;
   width: 100%; /* Add this to make sure the image covers the container */
-  opacity: 0.35;
+  opacity: 0.3;
   margin-top: 0;
   bottom: 100px;
 }
@@ -63,7 +63,7 @@
 .search-container {
   position: relative;
   z-index: 2;
-  bottom: -100px;
+  bottom: 180px;
 }
 
 .logo-img-home {
@@ -84,4 +84,72 @@
   position: relative;
   margin-top: 400px;
 }
+
+/* Fade in POs */
+.fade-in-image {
+  animation: fadeIn 5s;
+  -webkit-animation: fadeIn 5s;
+  -moz-animation: fadeIn 5s;
+  -o-animation: fadeIn 5s;
+  -ms-animation: fadeIn 5s;
+}
+
+.poi-1 {
+  position: relative;
+  width: 50px;
+  z-index: 1;
+  top: 30px;
+}
+
+.poi-2 {
+  position: relative;
+  width: 50px;
+  z-index: 1;
+  left: 700px;
+  bottom: -20px;
+}
+
+.poi-3 {
+  position: relative;
+  width: 50px;
+  z-index: 1;
+  right: 500px;
+  bottom: -20px;
+}
+
+.poi-4 {
+  position: relative;
+  width: 50px;
+  z-index: 1;
+  right: 200px;
+  top: -500px;
+  left: 50px;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@-moz-keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@-webkit-keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@-o-keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@-ms-keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+
 

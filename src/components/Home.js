@@ -3,6 +3,7 @@ import './Home.css';
 
 function Home() {
   const [showComponent, setShowComponent] = useState(false);
+  
 
 
   useEffect(() => {
@@ -15,6 +16,7 @@ function Home() {
 
     return () => clearTimeout(transitionDelay);
   }, []);
+  
 
   return (
     <div className="body-img">
@@ -25,6 +27,34 @@ function Home() {
           className="logo-img-home"
         />
       </div>
+      <div className="fade-in-image">
+          <img
+            src={process.env.PUBLIC_URL + '/images/whir_map_poi.png'}
+            alt="mappoi"
+            className="poi-1"
+            />
+        </div>
+        <div className="fade-in-image">
+          <img
+            src={process.env.PUBLIC_URL + '/images/whir_map_poi.png'}
+            alt="mappoi"
+            className="poi-2"
+            />
+        </div>
+        <div className="fade-in-image">
+          <img
+            src={process.env.PUBLIC_URL + '/images/whir_map_poi.png'}
+            alt="mappoi"
+            className="poi-3"
+            />
+        </div>
+        <div className="fade-in-image">
+          <img
+            src={process.env.PUBLIC_URL + '/images/whir_map_poi.png'}
+            alt="mappoi"
+            className="poi-4"
+            />
+        </div>
         <div className="main-img-container">    
         <img
           src={process.env.PUBLIC_URL + '/images/map_sil_fade.png'}
