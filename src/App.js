@@ -14,6 +14,9 @@ import BusinessSignUp from './components/BusinessSignUp';
 import SuccessScreen from './components/SuccessScreen';
 import BusinessDealManager from './components/BusinessDealManager';
 import BusinessDashboard from './components/BusinessDashboard';
+import HomeAbout from './components/HomeAbout';
+import HomeLocations from './components/HomeLocations';
+import HomeSpotlight from './components/HomeSpotlight';
 import { AuthProvider } from './AuthContext'; // Import AuthProvider
 
 function App() {
@@ -34,6 +37,9 @@ function App() {
             <Route path="/searchscreen" element={<SearchScreen />} />
             <Route path="businessdealmanager" element={<BusinessDealManager />} />
             <Route path="businessdashboard" element={<BusinessDashboard />} />
+            <Route path="homespotlight" element={<HomeSpotlight />} />
+            <Route path="homelocations" element={<HomeLocations />} />
+            <Route path="homeabout" element={<HomeAbout />} />
             <Route path="*" element={<Home />} />
           </Routes>
           <Footer />
