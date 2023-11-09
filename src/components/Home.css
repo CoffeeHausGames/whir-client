@@ -1,50 +1,85 @@
 /* Home.css */
+
+/* Header layer */
 .home {
-    text-align: center;
-    padding: 20px;
-  }
-  
+  text-align: center;
+  padding: 20px;
+  position: absolute; /* Add this line */
+  z-index: 2; /* Add this line to ensure the header is on top */
+}
+
+.home h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: left;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+}
+
+.home p {
+  font-size: 1rem;
+  line-height: 1.4;
+  color: #666;
+  max-width: 1000px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  text-align: left;
+  z-index: 3;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
   .home h1 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #333;
-    text-align: left;
-    font-family: 'Poppins', sans-serif;  
-    font-weight: 700;
-  }
-  
-  .home p {
-    font-size: 1rem;
-    line-height: 1.4;
-    color: #666;
-    max-width: 1000px;
-    font-family: 'Poppins', sans-serif;  
-    font-weight: 500;
-    text-align: left;
-  }
-  
-  
-  /* Media query for smaller screens */
-  @media (max-width: 768px) {
-    .home h1 {
-      font-size: 1.5rem;
-    }
-  
-    .home p {
-      font-size: 0.9rem;
-    }
+    font-size: 1.5rem;
   }
 
-    /* Define the transition effect */
-    .transition-effect {
-      opacity: 1;
-      transform: translateY(-10px);
-      transition: opacity 1.2s ease, transform 1.2s ease;
-    }
-    
-    /* Define the class to make the component visible */
-    .visible {
-      opacity: 0;
-      transform: translateY(0);
-    }
-  
+  .home p {
+    font-size: 0.9rem;
+  }
+}
+
+/* Define the transition effect */
+.transition-effect {
+  opacity: 1;
+  transform: translateY(-10px);
+  transition: opacity 1.2s ease, transform 1.2s ease;
+}
+
+/* Define the class to make the component visible */
+.visible {
+  opacity: 0;
+  transform: translateY(0);
+}
+
+.main-img {
+  width: 100%; /* Add this to make sure the image covers the container */
+  opacity: 0.5;
+  margin-top: 0;
+  bottom: 100px;
+}
+
+.search-container {
+  position: relative;
+  z-index: 2;
+  bottom: -100px;
+}
+
+.logo-img-home {
+  position: relative;
+  z-index: 3;
+  width: 70%;
+  top: 50px;
+}
+
+.main-img-container {
+  position: absolute;
+  top: 0;
+  margin-top: 0px;
+}
+
+.main-text-home {
+  position: relative;
+  margin-top: 400px;
+}
+
