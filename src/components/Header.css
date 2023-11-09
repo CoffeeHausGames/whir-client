@@ -192,3 +192,35 @@ body {
   opacity: 0;
   transform: translateY(0);
 }
+
+/* mid menu buttons */
+.mmbutton {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  margin-left: 20px;
+  margin-right: 20px;
+  font-family: 'Poppins', sans-serif;  
+  font-weight: 500;
+  font-size: 16px;
+  display: inline-block;
+  position: relative;
+}
+
+.mmbutton:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #000000;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.mmbutton:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
