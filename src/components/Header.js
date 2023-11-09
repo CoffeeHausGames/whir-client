@@ -63,13 +63,19 @@ const Header = () => {
       </div>
       <nav className="mid-menu">
         <div className="mid-menu-buttons">
-          <button className="mmbutton">
+          <button 
+          onClick={() => navigate('/homespotlight')}
+          className="mmbutton">
             Spotlight
           </button>
-          <button className="mmbutton">
+          <button 
+          onClick={() => navigate('/homelocations')}
+          className="mmbutton">
             Locations
           </button>
-          <button className="mmbutton">
+          <button 
+          onClick={() => navigate('/homeabout')}
+          className="mmbutton">
             About
           </button>
         </div>
