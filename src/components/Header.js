@@ -61,6 +61,19 @@ const Header = () => {
           onClick={() => navigate('/home')}
         />
       </div>
+      <nav className="mid-menu">
+        <div className="mid-menu-buttons">
+          <button className="mmbutton">
+            Spotlight
+          </button>
+          <button className="mmbutton">
+            Locations
+          </button>
+          <button className="mmbutton">
+            About
+          </button>
+        </div>
+      </nav>
       <nav className="menu">
         {(user && user.authenticated) || (businessUser && businessUser.authenticated) || isBusinessUserAuthenticated ? (
           <div className="menu-dropdown">

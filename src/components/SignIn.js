@@ -45,7 +45,7 @@ function SignIn() {
           const user = { ...responseData.data, authenticated: true };
           localStorage.setItem('user', JSON.stringify(user));
           signIn(); // Call the signIn function to update the context
-          navigate('/searchscreen'); // Redirect to the protected route
+          navigate('/home'); // Redirect to the protected route
         }
       } else {
         console.error('User authentication failed');
