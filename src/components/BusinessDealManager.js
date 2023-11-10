@@ -1,13 +1,15 @@
+// BusinessDealManager.js
 import React, { useState, useEffect } from 'react';
 import CustomRepeatModal from './CustomRepeatModal';
 import DealBox from './DealBox';
-import { useAuth } from '../AuthContext'; // Import your authentication context
+import { useAuth } from '../AuthContext';
 import './BusinessDealManager.css';
 
 function BusinessDealManager() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deals, setDeals] = useState([]);
-  const authContext = useAuth(); // Assuming you have a context for authentication
+  const [selectedDeal, setSelectedDeal] = useState(null);
+  const authContext = useAuth();
 
   useEffect(() => {
     // Fetch deals when the component mounts
@@ -32,31 +34,31 @@ function BusinessDealManager() {
       return;
     }
 
-    fetch('http://localhost:4444/business/deals', { // Assuming '/deal' endpoint for fetching deals
-      method: 'GET', // Use Get method for fetching deals
+    fetch('http://localhost:4444/business/deals', {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `${businessAuthToken}`,
       },
     })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`Failed to fetch deals. Server response: ${response.statusText}`);
-      }
-      return response.json();
-    })
-    .then((data) => {
-      console.log('Response body:', data);
-      setDeals(data);
-    })
-    .catch((error) => {
-      console.error('Error fetching deals:', error.message);
-    });
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Failed to fetch deals. Server response: ${response.statusText}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log('Response body:', data);
+        setDeals(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching deals:', error.message);
+      });
   };
 
   const handleDealClick = (deal) => {
     console.log('Deal clicked:', deal);
-    // Perform an action when a deal is clicked
+    setSelectedDeal(deal); // Update the selected deal
   };
 
   return (
@@ -65,7 +67,7 @@ function BusinessDealManager() {
         Add Deal/Event
       </button>
       {isModalOpen && <CustomRepeatModal isOpen={isModalOpen} onClose={closeModal} />}
-      <DealBox deals={deals} onDealClick={handleDealClick} />
+      <DealBox deals={deals} onDealClick={handleDealClick} selectedDeal={selectedDeal} />
     </div>
   );
 }
