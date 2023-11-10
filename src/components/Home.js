@@ -27,7 +27,7 @@ function Home() {
           className="logo-img-home"
         />
       </div>
-      <div className="fade-in-image">
+      {/* <div className="fade-in-image">
           <img
             src={process.env.PUBLIC_URL + '/images/whir_map_poi.png'}
             alt="mappoi"
@@ -54,7 +54,7 @@ function Home() {
             alt="mappoi"
             className="poi-4"
             />
-        </div>
+        </div> */}
         <div className="main-img-container">    
         <img
           src={process.env.PUBLIC_URL + '/images/map_sil_fade.png'}

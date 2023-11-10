@@ -57,14 +57,14 @@
   }
 
   .add-deal-button {
-    width: 100px;
+    width: 130px;
     margin-left: 20px;
     background-color: transparent;
     border-radius: 20px;
     font-family: 'Poppins', sans-serif;  
     cursor: pointer;
     border: 1px solid black;
-    padding: 5px;
+    padding: 8px;
     background-color: #f9f9f9;
     transition: 0.5s;
   }
