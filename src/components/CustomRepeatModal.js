@@ -1,138 +1,214 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+import { useAuth } from '../AuthContext';
 import './CustomRepeatModal.css';
 
-const CustomRepeatModal = ({
-  isOpen,
-  onRequestClose,
-  customRepeatConfig,
-  setCustomRepeatConfig,
-  toggleCustomRepeatModal,
-  dealName,
-  description,
-  setDealName,
-  setDescription,
-  handleSaveDeal,
-}) => {
-  const el = document.createElement('div');
+function CustomRepeatModal({ isOpen, onClose }) {
+  const [deal, setDeal] = useState({
+    name: '',
+    start_time: '',
+    end_time: '',
+    day_of_week: '',
+    start_date: '',
+    end_date: '',
+    description: '',
+  });
 
-  useEffect(() => {
-    document.body.appendChild(el);
-    return () => {
-      document.body.removeChild(el);
-    };
-  }, [el]);
+  const authContext = useAuth();
 
-  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-  const toggleDay = (day) => {
-    const updatedDays = customRepeatConfig.days.includes(day)
-      ? customRepeatConfig.days.filter((selectedDay) => selectedDay !== day)
-      : [...customRepeatConfig.days, day];
-
-    setCustomRepeatConfig({ ...customRepeatConfig, days: updatedDays });
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setDeal({ ...deal, [name]: value });
   };
 
-  const resetModal = () => {
-    // Clear input values
-    setDealName('');
-    setDescription('');
-    setCustomRepeatConfig({
-      startDate: '',
-      endDate: '',
-      startTime: '',
-      endTime: '',
-      days: [],
-    });
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
-    // Close the modal
-    onRequestClose(); // Set isOpen to false in the parent component
+    const businessAuthToken = authContext.businessUser
+      ? authContext.businessUser.token
+      : null;
+
+    if (!businessAuthToken) {
+      console.error('Business user authentication token not found.');
+      return;
+    }
+
+    // Structure the deal object to match the expected format with timestamps
+    const formattedDeal = {
+      name: deal.name,
+      start_time: new Date(deal.start_time).toISOString(),
+      end_time: new Date(deal.end_time).toISOString(),
+      day_of_week: deal.day_of_week,
+      start_date: new Date(deal.start_date).toISOString(),
+      end_date: new Date(deal.end_date).toISOString(),
+      description: deal.description,
+    };
+
+    fetch('http://localhost:4444/business/deal', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `${businessAuthToken}`,
+      },
+      body: JSON.stringify(formattedDeal),
+    })
+      .then((response) => response.text())
+      .then((data) => {
+        let jsonData;
+        try {
+          jsonData = data ? JSON.parse(data) : {};
+        } catch (e) {
+          console.error('Invalid JSON:', e);
+        }
+        console.log(jsonData);
+        setDeal({
+          name: '',
+          start_time: '',
+          end_time: '',
+          day_of_week: '',
+          start_date: '',
+          end_date: '',
+          description: '',
+        });
+        onClose();
+      })
+      .catch((error) => {
+        console.error('There was an error!', error);
+      });
+  };
+
+  const handleCancel = () => {
+    setDeal({
+      name: '',
+      start_time: '',
+      end_time: '',
+      day_of_week: '',
+      start_date: '',
+      end_date: '',
+      description: '',
+    });
+    onClose();
   };
 
   if (!isOpen) {
-    return null; // Do not render the modal if isOpen is false
+    return null;
   }
 
   return ReactDOM.createPortal(
-    <div className={`custom-repeat-overlay open`} onClick={onRequestClose}>
-      <div className={`custom-repeat-modal open`} onClick={(e) => e.stopPropagation()}>
-        <label>Deal Name:</label>
-        <input
-          type="text"
-          value={dealName}
-          // onChange={(e) => setDealName(e.target.value)}I have no idea why this isn't working but it will only let me input one character at a time
-          onChange={() => setDealName()}
-          maxLength={75} // Set the maximum length to 75 characters
-          minLength={2}
-        />
-
-        <div className="input-group">
-          <label>Start Date:</label>
-          <input
-            type="date"
-            value={customRepeatConfig.startDate}
-            onChange={(e) => setCustomRepeatConfig({ ...customRepeatConfig, startDate: e.target.value })}
-          />
-
-          <label>End Date:</label>
-          <input
-            type="date"
-            value={customRepeatConfig.endDate}
-            onChange={(e) => setCustomRepeatConfig({ ...customRepeatConfig, endDate: e.target.value })}
-          />
-        </div>
-
-        <div className="input-group">
-          <label>Start Time:</label>
-          <input
-            type="time"
-            value={customRepeatConfig.startTime}
-            onChange={(e) => setCustomRepeatConfig({ ...customRepeatConfig, startTime: e.target.value })}
-          />
-
-          <label>End Time:</label>
-          <input
-            type="time"
-            value={customRepeatConfig.endTime}
-            onChange={(e) => setCustomRepeatConfig({ ...customRepeatConfig, endTime: e.target.value })}
-          />
-        </div>
-
-        <div className="day-selection">
-          <label>Select Days:</label>
-          <div className="day-buttons">
-            {daysOfWeek.map((day, index) => (
-              <button
-                key={index}
-                className={`day-button ${customRepeatConfig.days.includes(day) ? 'selected' : ''}`}
-                onClick={() => toggleDay(day)}
-              >
-                {day.charAt(0)}
-              </button>
-            ))}
+    <div className="backdrop">
+      <div className="modal-content">
+        <form className="modal" onSubmit={handleSubmit}>
+          <div className="name-row">
+            <p>Deal Name</p>
+            <input
+              className="deal-name"
+              type="text"
+              name="name"
+              value={deal.name}
+              onChange={handleChange}
+              placeholder=""
+              required
+            />
           </div>
-        </div>
 
-        <label>Description:</label>
-        <input
-          type="text"
-          value={description}
-          // onChange={(e) => setDescription(e.target.value)} I have no idea why this isn't working but it will only let me input one character at a time
-          onChange={() => setDescription()}
-          maxLength={500} // Set the maximum length to 500 characters
-        />
-        <div className="button-group">
-          <button className="modal-save" onClick={handleSaveDeal}>
-            Save
-          </button>
-          <button className="modal-cancel" onClick={resetModal}>
-            Cancel
-          </button>
-        </div>
+          <div className="time-row">
+            <p>Start Date</p>
+            <input
+              className="deal-start-time"
+              type="datetime-local"
+              name="start_time"
+              value={deal.start_time}
+              onChange={handleChange}
+              placeholder="Start Time"
+              required
+            />
+            <p>End Date</p>
+            <input
+              className="deal-end-time"
+              type="datetime-local"
+              name="end_time"
+              value={deal.end_time}
+              onChange={handleChange}
+              placeholder="End Time"
+              required
+            />
+          </div>
+
+          <div className="dow-row">
+            <p>Day of Week</p>
+            <input
+              className="deal-dow"
+              type="text"
+              name="day_of_week"
+              value={deal.day_of_week}
+              onChange={handleChange}
+              placeholder="Day of Week"
+              required
+            />
+          </div>
+
+          <div className="date-row">
+            <p>Start Time</p>
+            <input
+              className="deal-start-date"
+              type="datetime-local"
+              name="start_date"
+              value={deal.start_date}
+              onChange={handleChange}
+              placeholder="Start Date"
+              required
+            />
+            <p>End Time</p>
+            <input
+              className="deal-end-date"
+              type="datetime-local"
+              name="end_date"
+              value={deal.end_date}
+              onChange={handleChange}
+              placeholder="End Date"
+              required
+            />
+          </div>
+          <div className="desc-row">
+            <p>Description</p>
+            <textarea
+              className="deal-desc"
+              name="description"
+              value={deal.description}
+              onChange={handleChange}
+              placeholder=""
+              required
+            />
+          </div>
+
+          <div className="buttons-row">
+            <div className="save-discard-button-container">
+            <img
+                src={process.env.PUBLIC_URL + '/images/save.svg'}
+                alt="searchicon"
+                className="save-icon"
+              />
+              <input className="save-button" type="submit" value="Save" />
+              <img
+                src={process.env.PUBLIC_URL + '/images/trash3.svg'}
+                alt="searchicon"
+                className="discard-icon"
+              />
+              <button
+                type="button"
+                className="discard-button"
+                onClick={handleCancel}
+              >
+              Discard
+            </button>
+            </div>
+
+          </div>
+        </form>
       </div>
     </div>,
-    el
+    document.body
   );
-};
+}
 
 export default CustomRepeatModal;

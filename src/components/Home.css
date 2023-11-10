@@ -63,7 +63,7 @@
 .search-container {
   position: relative;
   z-index: 2;
-  bottom: 180px;
+  bottom: -170px;
 }
 
 .logo-img-home {
@@ -86,7 +86,9 @@
 }
 
 /* Fade in POs */
-.fade-in-image {
+/* ----You need to decide if you really want this */
+
+/* .fade-in-image {
   animation: fadeIn 5s;
   -webkit-animation: fadeIn 5s;
   -moz-animation: fadeIn 5s;
@@ -149,7 +151,7 @@
 @-ms-keyframes fadeIn {
   0% { opacity: 0; }
   100% { opacity: 1; }
-}
+} */
 
 
 
