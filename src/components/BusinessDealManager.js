@@ -32,20 +32,26 @@ function BusinessDealManager() {
       return;
     }
 
-    fetch('http://localhost:4444/business', {
-      method: 'POST', // Assuming your API supports GET for fetching deals
+    fetch('http://localhost:4444/business/deals', { // Assuming '/deal' endpoint for fetching deals
+      method: 'GET', // Use Get method for fetching deals
       headers: {
         'Content-Type': 'application/json',
         Authorization: `${businessAuthToken}`,
       },
     })
-      .then((response) => response.json())
-      .then((data) => {
-        setDeals(data);
-      })
-      .catch((error) => {
-        console.error('Error fetching deals:', error);
-      });
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Failed to fetch deals. Server response: ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log('Response body:', data);
+      setDeals(data);
+    })
+    .catch((error) => {
+      console.error('Error fetching deals:', error.message);
+    });
   };
 
   const handleDealClick = (deal) => {
