@@ -58,7 +58,7 @@
 
   .add-deal-button {
     width: 130px;
-    margin-left: 20px;
+    margin-right: 83%; /* Adjust the left margin as needed */
     background-color: transparent;
     border-radius: 20px;
     font-family: 'Poppins', sans-serif;  

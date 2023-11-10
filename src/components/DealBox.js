@@ -1,35 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './DealBox.css';
 
-const DealBox = () => {
- const [deals, setDeals] = useState([]);
+const DealBox = ({ deals, onDealClick }) => {
+  const handleDealClick = (deal) => {
+    console.log('Deal clicked:', deal);
+    // Perform an action when a deal is clicked
+    onDealClick(deal);
+  };
 
- useEffect(() => {
-   fetch('http://localhost:4444/business', {
-     method: 'POST',
-     headers: {
-       'Content-Type': 'application/json',
-     },
-     body: JSON.stringify({
-       // Your request body here
-     }),
-   })
-     .then(response => response.json())
-     .then(data => {
-       setDeals(data);
-     })
-     .catch(error => {
-       console.error('Error fetching deals:', error);
-     });
- }, []);
-
- const handleDealClick = (deal) => {
-   console.log('Deal clicked:', deal);
-   // Perform an action when a deal is clicked
- };
-
- return (
-   <div className="deal-box placeholder">
+  return (
+    <div className="deal-box placeholder">
       {deals.length > 0 ? (
         deals.map((deal, index) => (
           <button className="deal-button" key={index} onClick={() => handleDealClick(deal)}>
@@ -40,8 +20,8 @@ const DealBox = () => {
       ) : (
         <p>No deals</p>
       )}
-   </div>
- );
+    </div>
+  );
 };
 
 export default DealBox;
