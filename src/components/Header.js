@@ -55,7 +55,7 @@ const Header = () => {
     <header className="header">
       <div className="logo-container">
         <img
-          src={process.env.PUBLIC_URL + '/images/whirpng_croppedslim.png'}
+          src={process.env.PUBLIC_URL + '/images/whirpng_croppedslim_white.png'}
           alt="Logo"
           className="logo"
           onClick={() => navigate('/home')}
@@ -85,7 +85,7 @@ const Header = () => {
           <div className="menu-dropdown">
             <button className="menu-button" onClick={handleUserProfileClick}>
               <img
-                src={process.env.PUBLIC_URL + '/images/person-circle.svg'}
+                src={process.env.PUBLIC_URL + '/images/person-circle.png'}
                 alt="Logo"
                 className="profile-image"
               />

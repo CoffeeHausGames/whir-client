@@ -22,7 +22,7 @@ function Home() {
     <div className="body-img">
       <div >
               <img
-          src={process.env.PUBLIC_URL + '/images/whirpng_croppedslim.png'}
+          src={process.env.PUBLIC_URL + '/images/whirpng_croppedslim_white.png'}
           alt="mapimage"
           className="logo-img-home"
         />
@@ -78,8 +78,8 @@ function Home() {
       <div className="main-text-home">
         <div className={`home ${showComponent ? 'visible' : 'transition-effect'}`}>
         <h1>Welcome to Whir</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ac velit ac tellus venenatis tincidunt. Sed nec odio tincidunt, hendrerit urna eu, vestibulum nulla. Phasellus convallis vel dolor eu malesuada. Proin in eros vitae lorem feugiat pharetra. Nullam pulvinar quam non orci tincidunt, nec semper nisl varius. Fusce varius ultricies quam, ac eleifend augue. Cras eget orci quis elit venenatis aliquet. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin eu dapibus nulla. Nullam nec facilisis nisi.</p>
-      </div>
+        <p>Discover Local Delights with Whir: Your one-stop destination for all things local. Explore exclusive deals, events, and promotions, while supporting community businesses. Join the Whir community to unlock unique membership perks and be part of the movement that revitalizes local commerce</p>
+        </div>
       </div>
 
     </div>

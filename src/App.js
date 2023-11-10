@@ -17,6 +17,7 @@ import BusinessDashboard from './components/BusinessDashboard';
 import HomeAbout from './components/HomeAbout';
 import HomeLocations from './components/HomeLocations';
 import HomeSpotlight from './components/HomeSpotlight';
+import LandingPage from './components/LandingPage';
 import { AuthProvider } from './AuthContext'; // Import AuthProvider
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
             <Route path="homespotlight" element={<HomeSpotlight />} />
             <Route path="homelocations" element={<HomeLocations />} />
             <Route path="homeabout" element={<HomeAbout />} />
+            <Route path="landingpage" element={<LandingPage />} />
             <Route path="*" element={<Home />} />
           </Routes>
           <Footer />
