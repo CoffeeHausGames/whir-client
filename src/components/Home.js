@@ -1,10 +1,11 @@
 // Home.js
 import React, { useState, useEffect } from 'react';
-import Search from './Search'; // Update the path based on your project structure
+import { useNavigate } from 'react-router-dom'; // Import useHistory from react-router-dom
 import './Home.css';
 
 function Home() {
   const [showComponent, setShowComponent] = useState(false);
+  const navigate = useNavigate(); // Create a history object
 
   useEffect(() => {
     setShowComponent(true);
@@ -20,6 +21,11 @@ function Home() {
     // Implement the logic for handling the search query in your Home component
     console.log('Search Query:', searchQuery);
     // You can perform actions like fetching data, updating state, etc.
+  };
+
+  const navigateToSearchScreen = () => {
+    // Use the history object to navigate to /searchscreen
+    navigate('/searchscreen');
   };
 
   return (
@@ -38,8 +44,12 @@ function Home() {
           className="main-img"
         />
       </div>
-      <div className="search-container">
-        <Search onSearch={handleSearch} />
+      <div className="button-container">
+        {/* Button to navigate to /searchscreen */}
+        <button className="discover-deals-button" onClick={navigateToSearchScreen}>
+          Discover Deals Near Me
+        </button>
+        {/* Add other buttons or actions as needed */}
       </div>
       <div className="main-text-home">
         <div className={`home ${showComponent ? 'visible' : 'transition-effect'}`}>

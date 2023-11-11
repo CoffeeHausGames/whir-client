@@ -1,7 +1,9 @@
-/* MapComponent.css */
 .map-container {
-    height: 70vh; /* Set your desired height */
-    border: 1px solid #ccc; /* Add border or other styles as needed */
-    z-index: 5;
+    position: absolute;
+    top: 51%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 99.5%;
+    height: 93vh;
+    z-index: 1;
   }
-  
