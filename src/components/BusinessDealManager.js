@@ -34,7 +34,7 @@ function BusinessDealManager() {
       return;
     }
 
-    fetch('http://localhost:4444/business/deals', {
+    fetch('http://localhost:4444/business/deal', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ function BusinessDealManager() {
       })
       .then((data) => {
         console.log('Response body:', data);
-        setDeals(data);
+        setDeals(data.data);
       })
       .catch((error) => {
         console.error('Error fetching deals:', error.message);

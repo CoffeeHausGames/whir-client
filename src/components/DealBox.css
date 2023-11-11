@@ -29,7 +29,7 @@
     cursor: pointer;
     background-color: white;
     border: none;
-    border-radius: 5px;
+    /* border-radius: 5px; */
     transition: 0.3s;
     border-bottom: 1px solid lightgray;
     padding: 15px;
@@ -48,6 +48,25 @@
   .deal-details {
     flex: 1;
     border-left: 1px solid gray;
+    padding: 5ps;
+  }
+
+  .deal-box-deal-name, 
+  .deal-box-deal-dow, 
+  .deal-box-deal-desc,
+  .deal-box-deal-startdate,
+  .deal-box-deal-enddate,
+  .deal-box-deal-starttime,
+  .deal-box-deal-endtime
+  {
+    padding: 10px;
+    text-align: left;
   }
   
-  
+  .deal-box-deal-startdate,
+  .deal-box-deal-enddate,
+  .deal-box-deal-starttime,
+  .deal-box-deal-endtime
+  {
+    text-align: left;
+  }

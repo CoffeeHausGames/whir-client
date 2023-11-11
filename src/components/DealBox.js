@@ -22,28 +22,29 @@ const DealBox = ({ deals, onDealClick, selectedDeal }) => {
   return (
     <div className="deal-box placeholder" style={{ display: 'flex' }}>
       <div className="deal-list">
-        {deals.length > 0 ? (
-          deals.map((deal, index) => (
-            <button className="deal-button" key={index} onClick={() => handleDealClick(deal)}>
-              <h2>{deal.name}</h2>
-              <p>{deal.description}</p>
-            </button>
-          ))
-        ) : (
+      {deals.length > 0 ? (
+          deals.map((deal, index) => {
+            return (
+              <button className="deal-button" key={index} onClick={() => handleDealClick(deal)}>
+                <h2>{deal.name}</h2>
+                <p>{deal.description}</p>
+              </button>
+            );
+          })
+          ) : (
           <p>No deals</p>
-        )}
+          )}
       </div>
       <div className="deal-details">
         {selectedDeal && (
           <>
-            <h1>{selectedDeal.name}</h1>
-            <h2>{selectedDeal.day_of_week}</h2>
-            <h3>{selectedDeal.description}</h3>
-            <p>{formatDate(selectedDeal.start_date)}</p>
-            <p>{formatDate(selectedDeal.end_date)}</p>
-            <p>{formatTime(selectedDeal.start_time)}</p>
-            <p>{formatTime(selectedDeal.end_time)}</p>
-            {/* Add more details as needed */}
+            <h1 className="deal-box-deal-name">{selectedDeal.name}</h1>
+            <h2 className="deal-box-deal-dow">{selectedDeal.day_of_week}</h2>
+            <h3 className="deal-box-deal-desc">{selectedDeal.description}</h3>
+            <p className="deal-box-deal-startdate">Start date: {formatDate(selectedDeal.start_date)}</p>
+            <p className="deal-box-deal-enddate">End date: {formatDate(selectedDeal.end_date)}</p>
+            <p className="deal-box-deal-starttime">Start time: {formatTime(selectedDeal.start_time)}</p>
+            <p className="deal-box-deal-endtime">End time: {formatTime(selectedDeal.end_time)}</p>
           </>
         )}
       </div>

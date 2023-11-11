@@ -51,7 +51,7 @@ function UserProfile(props) {
           <p>Description: {business.description}</p>
         </>
       )}
-      <button onClick={handleSignOut}>Sign Out</button>
+      <button className="sign-out-button" onClick={handleSignOut}>Sign Out</button>
     </div>
   );
 }
