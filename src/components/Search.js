@@ -3,7 +3,7 @@ import './Search.css'; // You can create a CSS file for styling
 
 const Search = ({ onSearch }) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [userLocation, setUserLocation] = useState(null);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const handleSearchQueryChange = (event) => {
     setSearchQuery(event.target.value);
@@ -11,36 +11,21 @@ const Search = ({ onSearch }) => {
 
   const handleSearch = () => {
     // You can perform any search-related actions here
-    // For now, let's just pass the searchQuery and userLocation to the parent component
-    onSearch({ searchQuery, userLocation });
+    // For now, let's just pass the searchQuery to the parent component
+    onSearch(searchQuery);
   };
 
-  // Function to get the user's current location
-  const getUserLocation = () => {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setUserLocation({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          });
-          console.log('User location:', userLocation);
-        },
-        (error) => {
-          console.error('Error getting user location:', error.message);
-        }
-      );
-    } else {
-      console.error('Geolocation is not supported by your browser');
-    }
+  const toggleSearchBar = () => {
+    setIsExpanded(!isExpanded);
   };
 
   return (
-    <div className="search-container">
+    <div className={`search-container ${isExpanded ? 'expanded' : ''}`}>
       <img
         src={process.env.PUBLIC_URL + '/images/search.svg'}
         alt="searchicon"
         className="search-icon"
+        onClick={toggleSearchBar}
       />
       <input
         className="main-search"
@@ -48,14 +33,15 @@ const Search = ({ onSearch }) => {
         placeholder="Enter ZIP code to find businesses nearby"
         value={searchQuery}
         onChange={handleSearchQueryChange}
-      />
-      <img
-        src={process.env.PUBLIC_URL + '/images/crosshair.svg'}
-        alt="locationicon"
-        className="location-icon"
-        onClick={getUserLocation}
+        onClick={toggleSearchBar}
       />
       {/* <button onClick={handleSearch}>Search</button> */}
+      {isExpanded && (
+        <div className="additional-component">
+          {/* Render your additional component here */}
+          <p>This is an additional component!</p>
+        </div>
+      )}
     </div>
   );
 };
