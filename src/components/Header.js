@@ -93,7 +93,7 @@ const Header = () => {
             {user && user.authenticated && (
               <div className="dropdown-content">
                 <button className="dropdown-item" onClick={() => navigate(businessUser ? "/userprofile" : "/userprofile")}>Profile</button>
-                <button className="dropdown-item" onClick={() => navigate(businessUser ? "/settings" : "/usersettings")}>Settings</button>
+                <button className="dropdown-item" onClick={() => navigate(businessUser ? "/settings" : "/usersettings")}>Preferences</button>
                 <button className="dropdown-item" onClick={businessUser ? handleBusinessSignOut : handleSignOut}>
                   Log Out
                 </button>
@@ -102,9 +102,9 @@ const Header = () => {
             {businessUser && businessUser.authenticated && (
               <div className="dropdown-content">
                 <button className="dropdown-item" onClick={() => navigate(businessUser ? "/userprofile" : "/userprofile")}>Profile</button>
-                <button className="dropdown-item" onClick={() => navigate('/businessdashboard')}> Dashboard </button>
-                <button className="dropdown-item" onClick={() => navigate('/businessdealmanager')}> Deals </button>
-                <button className="dropdown-item" onClick={() => navigate(businessUser ? "/settings" : "/usersettings")}>Settings</button>
+                {/* <button className="dropdown-item" onClick={() => navigate('/businessdashboard')}> Dashboard </button> */}
+                <button className="dropdown-item" onClick={() => navigate('/businessdealmanager')}> Deal Dashboard </button>
+                <button className="dropdown-item" onClick={() => navigate(businessUser ? "/settings" : "/usersettings")}>Preferences</button>
                 <button className="dropdown-item" onClick={businessUser ? handleBusinessSignOut : handleSignOut}>
                   Log Out
                 </button>

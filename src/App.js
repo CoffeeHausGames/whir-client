@@ -19,6 +19,7 @@ import HomeLocations from './components/HomeLocations';
 import HomeSpotlight from './components/HomeSpotlight';
 import LandingPage from './components/LandingPage';
 import Search from './components/Search';
+import MapComponent from './components/Map';
 import { AuthProvider } from './AuthContext'; // Import AuthProvider
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
             <Route path="homeabout" element={<HomeAbout />} />
             <Route path="landingpage" element={<LandingPage />} />
             <Route path="search" element={<Search />} />
+            <Route path="mapcomponent" element={<MapComponent />} />
             <Route path="*" element={<Home />} />
           </Routes>
           <Footer />
