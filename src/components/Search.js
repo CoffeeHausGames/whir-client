@@ -1,22 +1,27 @@
+// Search.js
 import React, { useState } from 'react';
-import './Search.css'; // You can create a CSS file for styling
+import './Search.css';
 
 const Search = ({ onSearch }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isExpanded, setIsExpanded] = useState(false);
+  const [mapVisible, setMapVisible] = useState(false);
 
   const handleSearchQueryChange = (event) => {
     setSearchQuery(event.target.value);
   };
 
   const handleSearch = () => {
-    // You can perform any search-related actions here
-    // For now, let's just pass the searchQuery to the parent component
+    // Perform search-related actions here
     onSearch(searchQuery);
   };
 
-  const toggleSearchBar = () => {
-    setIsExpanded(!isExpanded);
+  const moveSearchBarToBottom = () => {
+    if (!mapVisible) {
+      setIsExpanded(true);
+      setMapVisible(true);
+      onSearch(); // Trigger the onSearch function to show the map
+    }
   };
 
   return (
@@ -25,7 +30,7 @@ const Search = ({ onSearch }) => {
         src={process.env.PUBLIC_URL + '/images/search.svg'}
         alt="searchicon"
         className="search-icon"
-        onClick={toggleSearchBar}
+        onClick={moveSearchBarToBottom}
       />
       <input
         className="main-search"
@@ -33,15 +38,8 @@ const Search = ({ onSearch }) => {
         placeholder="Enter ZIP code to find businesses nearby"
         value={searchQuery}
         onChange={handleSearchQueryChange}
-        onClick={toggleSearchBar}
+        onClick={moveSearchBarToBottom}
       />
-      {/* <button onClick={handleSearch}>Search</button> */}
-      {isExpanded && (
-        <div className="additional-component">
-          {/* Render your additional component here */}
-          <p>This is an additional component!</p>
-        </div>
-      )}
     </div>
   );
 };
