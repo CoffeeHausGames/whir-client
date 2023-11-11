@@ -70,6 +70,7 @@ const Search = ({ onSearch }) => {
         onChange={handleSearchQueryChange}
         onClick={moveSearchBarToBottom}
       />
+      
       <img
         src={process.env.PUBLIC_URL + '../images/crosshair.svg'}
         alt="locationicon"
