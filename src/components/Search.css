@@ -11,3 +11,12 @@
 }
 
 /* Add any additional styling for the search container here */
+.location-icon {
+  position: absolute;
+  right: 11.2%;
+  top: 50%;
+  transform: translateY(-50%);
+  color: lightgray;
+  width: 32px;
+  cursor: pointer;
+}
