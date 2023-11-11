@@ -1,7 +1,7 @@
 .search-container {
   position: relative;
   z-index: 2;
-  bottom: -200px;
+  bottom: -280px;
   transition: transform 1.5s ease, opacity 0.5s ease;
 }
 
@@ -11,3 +11,12 @@
 }
 
 /* Add any additional styling for the search container here */
+.location-icon {
+  position: absolute;
+  right: 11.2%;
+  top: 50%;
+  transform: translateY(-50%);
+  color: lightgray;
+  width: 32px;
+  cursor: pointer;
+}
