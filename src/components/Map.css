@@ -1,0 +1,7 @@
+/* MapComponent.css */
+.map-container {
+    height: 70vh; /* Set your desired height */
+    border: 1px solid #ccc; /* Add border or other styles as needed */
+    z-index: 5;
+  }
+  

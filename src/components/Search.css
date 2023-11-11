@@ -7,3 +7,20 @@
   .search {
     left: 400px;
   }
+
+  .search-icon{
+    position: relative;
+    left: 10px;
+    top: 50px;
+    color: lightgray;
+    width: 23px;
+    }
+
+  .location-icon {
+    position: relative;
+    right: 3.5%;
+    top: 10px;
+    color: lightgray;
+    width: 35px;
+    cursor: pointer;
+  }
