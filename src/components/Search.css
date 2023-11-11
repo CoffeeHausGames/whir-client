@@ -1,0 +1,9 @@
+.search-container {
+    position: relative;
+    z-index: 2;
+    bottom: -170px;
+  }
+
+  .search {
+    left: 400px;
+  }

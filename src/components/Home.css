@@ -60,12 +60,6 @@
   bottom: 100px;
 }
 
-.search-container {
-  position: relative;
-  z-index: 2;
-  bottom: -170px;
-}
-
 .logo-img-home {
   position: relative;
   z-index: 3;
