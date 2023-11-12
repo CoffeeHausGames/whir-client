@@ -12,7 +12,7 @@ const Header = () => {
     const handleStorageChange = () => {
       // Handle changes in localStorage data for user and business user
       const userStorageData = localStorage.getItem('user');
-      const businessUserStorageData = localStorage.getItem('business');
+      const businessUserStorageData = localStorage.getItem('businessAuthToken');
 
       // Parse JSON data only if it exists
       const user = userStorageData ? JSON.parse(userStorageData) : null;
@@ -46,7 +46,7 @@ const Header = () => {
   };
 
   const handleBusinessSignOut = () => {
-    localStorage.removeItem('business');
+    localStorage.removeItem('businessAuthToken');
     businessSignOut();
     navigate('/signin');
   };

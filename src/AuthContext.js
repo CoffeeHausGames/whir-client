@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
  });
 
  const [businessUser, setBusinessUser] = useState(() => {
-   const businessUserData = localStorage.getItem('business');
+   const businessUserData = localStorage.getItem('businessAuthToken');
    try {
      const businessUser = businessUserData ? JSON.parse(businessUserData) : JSON.parse('{}');
      return businessUser && businessUser.authenticated ? businessUser : null;
@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }) => {
 
  const businessSignOut = () => {
   setBusinessUser(null);
-  localStorage.removeItem('business');
+  localStorage.removeItem('businessAuthToken');
   setIsBusinessUserAuthenticated(false);
 };
 
