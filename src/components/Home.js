@@ -46,12 +46,12 @@ function Home() {
       </div>
       <div className="button-container">
         {/* Button to navigate to /searchscreen */}
-        <button className="discover-deals-button" onClick={navigateToSearchScreen}>
-          Discover Deals Near Me
+        <button className="discover-deals-button-left" onClick={navigateToSearchScreen}>
+          Discover Deals Near You
         </button>
         {/* Add other buttons or actions as needed */}
       </div>
-      <div className="main-text-home">
+      {/* <div className="main-text-home">
         <div className={`home ${showComponent ? 'visible' : 'transition-effect'}`}>
           <h1>Welcome to Whir</h1>
           <p>
@@ -61,7 +61,7 @@ function Home() {
             that revitalizes local commerce
           </p>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

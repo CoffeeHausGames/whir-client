@@ -8,6 +8,8 @@ const SearchScreen = ({ userLocation, onSearch }) => {
   const [isMapVisible, setIsMapVisible] = useState(false);
   const [businesses, setBusinesses] = useState([]);
   const mapRef = useRef(null);
+  const [showComponent, setShowComponent] = useState(false);
+
 
   const toggleMapVisibility = (businesses) => {
     setIsMapVisible(!isMapVisible);
@@ -20,8 +22,19 @@ const SearchScreen = ({ userLocation, onSearch }) => {
     }
   }, [isMapVisible]);
 
+  useEffect(() => {
+    setShowComponent(true); // Show the component immediately
+
+    // Add the transition effect after a short delay
+    const transitionDelay = setTimeout(() => {
+      setShowComponent(false); // Remove the transition effect class
+    }, 100); // You can adjust the duration as needed
+
+    return () => clearTimeout(transitionDelay);
+  }, []);
+
   return (
-    <div>
+    <div className={`searchscreen ${showComponent ? 'visible' : 'transition-effect'}`}>
       <Search onSearch={toggleMapVisibility} />
       {isMapVisible && (
         <div className="map-container" ref={mapRef}>
