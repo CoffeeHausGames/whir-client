@@ -5,8 +5,7 @@ function HomeLocations() {
   return (
     <div>
         <div className="search-input">
-            <h1>Success!</h1>
-            <h2>HomeLocations screen</h2>
+            <h1>Coming Soon!!</h1>
         </div>
     </div>
   );

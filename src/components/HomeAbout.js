@@ -5,8 +5,7 @@ function HomeAbout() {
   return (
     <div>
         <div className="search-input">
-            <h1>Success!</h1>
-            <h2>HomeAbout screen</h2>
+            <h1>Coming Soon!</h1>
         </div>
     </div>
   );
