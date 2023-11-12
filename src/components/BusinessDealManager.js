@@ -49,7 +49,7 @@ function BusinessDealManager() {
       })
       .then((data) => {
         console.log('Response body:', data);
-        setDeals(data.data);
+        setDeals(data.data); // Set deals directly from response.data.data
       })
       .catch((error) => {
         console.error('Error fetching deals:', error.message);
