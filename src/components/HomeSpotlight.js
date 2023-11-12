@@ -25,13 +25,13 @@ const HomeSpotlight = () => {
 
   return (
     <div className="home-spotlight">
-      <h1>Community Spotlight</h1>
-      {news.map((item) => (
+      <h1>Coming Soon!</h1>
+      {/* {news.map((item) => (
         <div key={item.id} className="news-item">
           <h3>{item.title}</h3>
           <p>{item.content}</p>
         </div>
-      ))}
+      ))} */}
     </div>
   );
 };
