@@ -17,6 +17,11 @@ const DealBox = ({ deals, onDealClick, selectedDeal }) => {
     setIsEditMode(true);
   };
 
+  const handleCancelClick = () => {
+    // Reset the state and exit edit mode
+    setIsEditMode(false);
+    setEditedDeal({ ...selectedDeal });
+  };
 
   const authContext = useAuth();
 
@@ -24,12 +29,12 @@ const DealBox = ({ deals, onDealClick, selectedDeal }) => {
     const businessAuthToken = authContext.businessUser
       ? authContext.businessUser.token
       : null;
-  
+
     if (!businessAuthToken) {
       console.error('Business user authentication token not found.');
       return;
     }
-  
+
     const updatedDeal = {
       id: editedDeal.id, // Include the deal ID in the body
       name: editedDeal.name,
@@ -40,9 +45,9 @@ const DealBox = ({ deals, onDealClick, selectedDeal }) => {
       end_date: new Date(editedDeal.end_date).toISOString(),
       description: editedDeal.description,
     };
-  
+
     console.log('Updated Deal Body:', updatedDeal);
-  
+
     fetch(`http://localhost:4444/business/deal`, {
       method: 'PUT',
       headers: {
@@ -55,7 +60,6 @@ const DealBox = ({ deals, onDealClick, selectedDeal }) => {
         if (!response.ok) {
           throw new Error(`Failed to update deal. Server response: ${response.statusText}`);
         }
-        window.location.reload();
         // If successful, toggle back to view mode and update the selected deal
         setIsEditMode(false);
         onDealClick(editedDeal);
@@ -64,7 +68,6 @@ const DealBox = ({ deals, onDealClick, selectedDeal }) => {
         console.error('Error updating deal:', error.message);
       });
   };
-  
 
   // Function to format the date in mm/dd/yyyy format
   const formatDate = (dateString) => {
@@ -104,25 +107,29 @@ const DealBox = ({ deals, onDealClick, selectedDeal }) => {
                 <p className="deal-box-deal-enddate">End date: {formatDate(selectedDeal.end_date)}</p>
                 <p className="deal-box-deal-starttime">Start time: {formatTime(selectedDeal.start_time)}</p>
                 <p className="deal-box-deal-endtime">End time: {formatTime(selectedDeal.end_time)}</p>
-                <button onClick={handleEditClick}>Edit Deal</button>
+                <button className="edit-deal-button" onClick={handleEditClick}>Edit Deal</button>
               </>
             ) : (
               <>
+                <p>Deal Name</p>
                 <input
                   type="text"
                   value={editedDeal.name}
                   onChange={(e) => setEditedDeal({ ...editedDeal, name: e.target.value })}
                 />
+                <p>Day of the Week</p>
                 <input
                   type="text"
                   value={editedDeal.day_of_week}
                   onChange={(e) => setEditedDeal({ ...editedDeal, day_of_week: e.target.value })}
                 />
+                <p>Description</p>
                 <input
                   type="text"
                   value={editedDeal.description}
                   onChange={(e) => setEditedDeal({ ...editedDeal, description: e.target.value })}
                 />
+                <p>Start Date/End Date</p>
                 <input
                   type="datetime-local"
                   value={editedDeal.start_date}
@@ -133,6 +140,7 @@ const DealBox = ({ deals, onDealClick, selectedDeal }) => {
                   value={editedDeal.end_date}
                   onChange={(e) => setEditedDeal({ ...editedDeal, end_date: e.target.value })}
                 />
+                <p>Start Time/End Time</p>
                 <input
                   type="datetime-local"
                   value={editedDeal.time}
@@ -143,7 +151,8 @@ const DealBox = ({ deals, onDealClick, selectedDeal }) => {
                   value={editedDeal.time}
                   onChange={(e) => setEditedDeal({ ...editedDeal, end_time: e.target.value })}
                 />
-                <button onClick={handleSaveClick}>Save</button>
+                <button className="save-edit-button" onClick={handleSaveClick}>Save</button>
+                <button className="cancel-edit-button" onClick={handleCancelClick}>Cancel</button>
               </>
             )}
           </>

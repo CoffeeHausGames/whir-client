@@ -70,3 +70,90 @@
   {
     text-align: left;
   }
+
+  .edit-deal-button {
+    border-radius: 25px;
+    cursor: pointer;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 15px;
+    background-color: transparent;
+    border: 1px solid;
+  }
+
+  .edit-deal-button:hover {
+    background-color: rgb(255, 191, 0);
+    border: 1px solid black;
+  }
+
+  .save-edit-button {
+    border-radius: 25px;
+    cursor: pointer;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 15px;
+    background-color: transparent;
+    border: 1px solid lightgray;
+    position: relative;
+  }
+
+  .save-edit-button:hover {
+    background-color: rgb(255, 191, 0);
+    border: 1px solid lightgray;
+  }
+
+  .cancel-edit-button {
+    border-radius: 25px;
+    cursor: pointer;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 15px;
+    margin-top: 10px;
+    background-color: transparent;
+    border: 1px solid lightgray;
+    position: relative;
+    }
+
+  .cancel-edit-button:hover {
+    background-color: rgb(233, 231, 231);
+    border: 1px solid lightgray;
+  }
+
+  .deal-details input {
+    margin-bottom: 10px; /* Add this line to create space between input fields */
+    width: 100%; /* Set the width to 100% to ensure each input field takes a new line */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+  }
+  
+  /* Additional styles for specific input fields */
+  .deal-details input[type="datetime-local"] {
+    width: 43%; /* Adjust the width for date and time input fields */
+    margin: 4px;
+  }
+  
+  .deal-details input[type="text"] {
+    width: 90%; /* Full width for text input fields */
+  }
+  
+  /* Add styles for the Save and Cancel buttons */
+  .deal-details .save-edit-button,
+  .deal-details .cancel-edit-button {
+    border-radius: 25px;
+    cursor: pointer;
+    padding: 5px;
+    margin-right: 10px;
+    background-color: transparent;
+    border: 1px solid rgb(103, 103, 103);
+  }
+  
+  .deal-details .save-edit-button:hover,
+  .deal-details .cancel-edit-button:hover {
+    background-color: rgb(255, 191, 0);
+    border: 1px solid rgb(103, 103, 103);
+  }
