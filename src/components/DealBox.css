@@ -78,12 +78,30 @@
     padding-left: 10px;
     padding-right: 10px;
     margin-bottom: 15px;
+    margin-right: 10px;
     background-color: transparent;
     border: 1px solid;
   }
 
   .edit-deal-button:hover {
     background-color: rgb(255, 191, 0);
+    border: 1px solid black;
+  }
+
+  .delete-deal-button {
+    border-radius: 25px;
+    cursor: pointer;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 15px;
+    margin-left: 10px;
+    background-color: transparent;
+    border: 1px solid;
+  }
+
+  .delete-deal-button:hover {
+    background-color: rgb(255, 72, 0);
     border: 1px solid black;
   }
 
@@ -156,4 +174,51 @@
   .deal-details .cancel-edit-button:hover {
     background-color: rgb(255, 191, 0);
     border: 1px solid rgb(103, 103, 103);
+  }
+
+  .delete-confirmation-modal {
+    background-color: #fff; /* White background */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Box shadow for a floating effect */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1001; /* Ensure the modal content appears on top of the inputs */
+    width: 20%px; /* Set a fixed width */
+    height: 5%;
+  }
+
+  .no-delete-button {
+    border-radius: 25px;
+    cursor: pointer;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 15px;
+    margin-left: 80px;
+    margin-top: 10px;
+    background-color: transparent;
+    border: 1px solid;
+  }
+
+  .yes-delete-button {
+    border-radius: 25px;
+    cursor: pointer;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 15px;
+    margin-right: 80px;
+    background-color: transparent;
+    border: 1px solid;
+  }
+
+  .yes-delete-button:hover {
+      background-color: lightgray;
+  }
+
+  .no-delete-button:hover {
+    background-color: lightgray;
   }

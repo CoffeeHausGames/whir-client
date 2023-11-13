@@ -5,6 +5,9 @@ import { useAuth } from '../AuthContext';
 const DealBox = ({ deals, onDealClick, selectedDeal }) => {
   const [isEditMode, setIsEditMode] = useState(false);
   const [editedDeal, setEditedDeal] = useState({ ...selectedDeal });
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+
+  const authContext = useAuth();
 
   const handleDealClick = (deal) => {
     onDealClick(deal);
@@ -22,8 +25,6 @@ const DealBox = ({ deals, onDealClick, selectedDeal }) => {
     setIsEditMode(false);
     setEditedDeal({ ...selectedDeal });
   };
-
-  const authContext = useAuth();
 
   const handleSaveClick = () => {
     const businessAuthToken = authContext.businessUser
@@ -69,6 +70,48 @@ const DealBox = ({ deals, onDealClick, selectedDeal }) => {
       });
   };
 
+  const handleDeleteClick = () => {
+    // Show delete confirmation modal
+    setShowDeleteConfirmation(true);
+  };
+
+  const handleConfirmDelete = () => {
+    const businessAuthToken = authContext.businessUser
+      ? authContext.businessUser.token
+      : null;
+
+    if (!businessAuthToken) {
+      console.error('Business user authentication token not found.');
+      return;
+    }
+
+    fetch(`http://localhost:4444/business/deal`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `${businessAuthToken}`,
+      },
+      body: JSON.stringify({ id: selectedDeal.id }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Failed to delete deal. Server response: ${response.statusText}`);
+        }
+        // If successful, close the delete confirmation modal and refresh the page
+        setShowDeleteConfirmation(false);
+        onDealClick(null); // Deselect the current deal
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error('Error deleting deal:', error.message);
+      });
+  };
+
+  const handleCancelDelete = () => {
+    // Close the delete confirmation modal
+    setShowDeleteConfirmation(false);
+  };
+
   // Function to format the date in mm/dd/yyyy format
   const formatDate = (dateString) => {
     const options = { month: '2-digit', day: '2-digit', year: 'numeric' };
@@ -107,7 +150,12 @@ const DealBox = ({ deals, onDealClick, selectedDeal }) => {
                 <p className="deal-box-deal-enddate">End date: {formatDate(selectedDeal.end_date)}</p>
                 <p className="deal-box-deal-starttime">Start time: {formatTime(selectedDeal.start_time)}</p>
                 <p className="deal-box-deal-endtime">End time: {formatTime(selectedDeal.end_time)}</p>
-                <button className="edit-deal-button" onClick={handleEditClick}>Edit Deal</button>
+                <button className="edit-deal-button" onClick={handleEditClick}>
+                  Edit Deal
+                </button>
+                <button className="delete-deal-button" onClick={handleDeleteClick}>
+                  Delete Deal
+                </button>
               </>
             ) : (
               <>
@@ -151,13 +199,27 @@ const DealBox = ({ deals, onDealClick, selectedDeal }) => {
                   value={editedDeal.time}
                   onChange={(e) => setEditedDeal({ ...editedDeal, end_time: e.target.value })}
                 />
-                <button className="save-edit-button" onClick={handleSaveClick}>Save</button>
-                <button className="cancel-edit-button" onClick={handleCancelClick}>Cancel</button>
+                <button className="save-edit-button" onClick={handleSaveClick}>
+                  Save
+                </button>
+                <button className="cancel-edit-button" onClick={handleCancelClick}>
+                  Cancel
+                </button>
               </>
             )}
           </>
         )}
       </div>
+      {/* Delete Confirmation Modal */}
+      {showDeleteConfirmation && (
+        <div className="backdrop">
+          <div className="delete-confirmation-modal">
+            <p>Are you sure you want to delete this deal?</p>
+            <button className="yes-delete-button" onClick={handleConfirmDelete}>Yes</button>
+            <button className="no-delete-button" onClick={handleCancelDelete}>No</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

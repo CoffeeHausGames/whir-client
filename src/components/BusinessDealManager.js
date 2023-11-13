@@ -12,9 +12,14 @@ function BusinessDealManager() {
   const authContext = useAuth();
 
   useEffect(() => {
+    console.log(authContext); // Add this line to check the authContext
+    fetchDeals();
+  });
+
+  useEffect(() => {
     // Fetch deals when the component mounts
     fetchDeals();
-  }, []);
+  });
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -28,6 +33,8 @@ function BusinessDealManager() {
 
   const fetchDeals = () => {
     const businessAuthToken = authContext.businessUser ? authContext.businessUser.token : null;
+    console.log('businessAuthToken:', businessAuthToken);
+    console.log('businessUser:', authContext.businessUser);
 
     if (!businessAuthToken) {
       console.error('Business user authentication token not found.');
