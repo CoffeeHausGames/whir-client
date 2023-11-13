@@ -50,7 +50,6 @@ const MapComponent = ({ userLocation, selectedBusinessLocation }) => {
 
     if (selectedBusinessLocation) {
       const { latitude, longitude } = selectedBusinessLocation;
-      console.log(`Selected Business Location: Latitude: ${latitude}, Longitude: ${longitude}`);
 
       const businessMarker = L.marker([longitude, latitude], {
         icon: customBusinessIcon,

@@ -1,6 +1,6 @@
 .search-container {
   position: relative;
-  z-index: 2;
+  z-index: 8;
   bottom: -280px;
   transition: transform 1.5s ease, opacity 0.5s ease;
 }

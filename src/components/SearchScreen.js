@@ -2,6 +2,7 @@
 import React, { useState, useRef } from 'react';
 import Search from './Search';
 import MapComponent from './Map';
+import DealDisplay from './DealDisplay';
 import './SearchScreen.css';
 
 const SearchScreen = () => {
@@ -22,12 +23,20 @@ const SearchScreen = () => {
     <div>
       <Search onSearch={handleSearch} />
       {isMapVisible && (
+        <div className="deal-content-box">
         <div className="map-container" ref={mapRef}>
           <MapComponent selectedBusinessLocation={selectedBusinessLocation} />
         </div>
+        <div className="deal-display-side">
+          <DealDisplay userLocation={selectedBusinessLocation} />
+        </div>
+        </div>
       )}
+      {/* Include the DealDisplay component */}
+
     </div>
   );
 };
 
 export default SearchScreen;
+
