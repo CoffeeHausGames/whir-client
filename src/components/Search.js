@@ -1,15 +1,16 @@
-// Search.js
 import React, { useState, useEffect } from 'react';
 import './Search.css';
 
-
 const Search = ({ onSearch }) => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [mapVisible, setMapVisible] = useState(false);
-  const [userLocation, setUserLocation] = useState(null);
-  const [businesses, setBusinesses] = useState([]);
-  const [filteredBusinesses, setFilteredBusinesses] = useState([]);
+ const [searchQuery, setSearchQuery] = useState('');
+ const [isExpanded, setIsExpanded] = useState(false);
+ const [mapVisible, setMapVisible] = useState(false);
+ const [userLocation, setUserLocation] = useState({ latitude: 0, longitude: 0 });
+ const [businesses, setBusinesses] = useState([]);
+ const [filteredBusinesses, setFilteredBusinesses] = useState([]);
+ const [showDropdown, setShowDropdown] = useState(false);
+ const [selectedBusiness, setSelectedBusiness] = useState(null);
+
 
   useEffect(() => {
     const fetchBusinesses = () => {
@@ -18,7 +19,7 @@ const Search = ({ onSearch }) => {
         longitude: userLocation.longitude,
         radius: 1000,
       };
-  
+
       fetch('http://localhost:4444/business', {
         method: 'POST',
         headers: {
@@ -40,35 +41,38 @@ const Search = ({ onSearch }) => {
           console.error('Error fetching businesses:', error.message);
         });
     };
-  
+
     if (userLocation) {
       fetchBusinesses();
     }
   }, [userLocation]);
 
+  const handleSearchResultClick = (business) => {
+    setSearchQuery(business.business_name);
+    setShowDropdown(false);
+    setSelectedBusiness(business); // Set the selected business
+  };
+
   useEffect(() => {
     if (searchQuery) {
       const lowerCaseQuery = searchQuery.toLowerCase();
-      console.log(businesses)
-      const filtered = businesses.filter(business =>
-        (business.business_name && business.business_name.toLowerCase().includes(lowerCaseQuery)) ||
-        (business.description && business.description.toLowerCase().includes(lowerCaseQuery))
+      const filtered = businesses.filter(
+        (business) =>
+          (business.business_name &&
+            business.business_name.toLowerCase().includes(lowerCaseQuery)) ||
+          (business.description &&
+            business.description.toLowerCase().includes(lowerCaseQuery))
       );
-      console.log(filtered)
       setFilteredBusinesses(filtered);
+      setShowDropdown(true);
     } else {
-      setFilteredBusinesses(businesses);
+      setFilteredBusinesses([]);
+      setShowDropdown(false);
     }
   }, [searchQuery, businesses]);
 
-
   const handleSearchQueryChange = (event) => {
     setSearchQuery(event.target.value);
-  };
-
-  const handleSearch = () => {
-    // Perform search-related actions here
-    onSearch(searchQuery, userLocation);
   };
 
   const moveSearchBarToBottom = () => {
@@ -79,33 +83,45 @@ const Search = ({ onSearch }) => {
     }
   };
 
-    // Function to get the user's current location
-    const getUserLocation = async () => {
-      if ('geolocation' in navigator) {
-        navigator.geolocation.getCurrentPosition(
-          async (position) => {
-            const userLocation = {
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude,
-            };
-    
-            // Store userLocation in local storage
-            localStorage.setItem('userLocation', JSON.stringify(userLocation));
-    
-            setUserLocation(userLocation);
-            console.log('User location:', userLocation);
-    
-            // Move the search bar to the bottom
-            moveSearchBarToBottom();
-          },
-          (error) => {
-            console.error('Error getting user location:', error.message);
-          }
-        );
-      } else {
-        console.error('Geolocation is not supported by your browser');
-      }
-    };
+  // Function to get the user's current location
+  const getUserLocation = async () => {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const userLocation = {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          };
+
+          // Store userLocation in local storage
+          localStorage.setItem('userLocation', JSON.stringify(userLocation));
+
+          setUserLocation(userLocation);
+          console.log('User location:', userLocation);
+
+          // Move the search bar to the bottom
+          moveSearchBarToBottom();
+        },
+        (error) => {
+          console.error('Error getting user location:', error.message);
+        }
+      );
+    } else {
+      console.error('Geolocation is not supported by your browser');
+    }
+  };
+
+  const renderDropdown = () => {
+    return (
+      <div className="search-dropdown">
+        {filteredBusinesses.map((business) => (
+          <div key={business.business_name} onClick={() => handleSearchResultClick(business)}>
+            {business.business_name}
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   return (
     <div className={`search-container ${isExpanded ? 'expanded' : ''}`}>
@@ -118,18 +134,21 @@ const Search = ({ onSearch }) => {
       <input
         className="main-search"
         type="text"
-        placeholder="Search for businesses near you. . ."
+        placeholder="Search for businesses near you..."
         value={searchQuery}
         onChange={handleSearchQueryChange}
         onClick={moveSearchBarToBottom}
       />
-      
       <img
         src={process.env.PUBLIC_URL + '../images/crosshair.svg'}
         alt="locationicon"
         className="location-icon"
         onClick={getUserLocation}
       />
+      {showDropdown && renderDropdown()}
+      {selectedBusiness && (
+        <button onClick={() => onSearch(selectedBusiness)}>Show on Map</button>
+      )}    
     </div>
   );
 };

@@ -62,7 +62,7 @@ export const AuthProvider = ({ children }) => {
  useEffect(() => {
    const handleStorageChange = () => {
      const userData = localStorage.getItem('user');
-     const businessUserData = localStorage.getItem('business');
+     const businessUserData = localStorage.getItem('businessAuthToken');
 
      try {
        const user = userData ? JSON.parse(userData) : null;
