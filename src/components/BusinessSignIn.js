@@ -34,6 +34,7 @@ function BusinessSignIn() {
        console.log('Business authenticated successfully');
        businessSignIn();
        navigate('/searchscreen');
+       window.location.reload();
      } else {
        console.error('Business authentication failed');
      }
