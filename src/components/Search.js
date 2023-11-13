@@ -71,7 +71,7 @@ const Search = ({ onSearch }) => {
     setSearchQuery(business.business_name);
     setShowDropdown(false);
     setSelectedBusiness(business); // Set the selected business
-    showBusinessLocationOnMap(business); // Show the selected business on the map
+    showBusinessLocationOnMap(business); // Show the selected business on the map    
   };
 
   useEffect(() => {

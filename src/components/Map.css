@@ -1,9 +1,9 @@
 .map-container {
     position: relative;
-    top: 92%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 99.5%;
-    height: 93vh;
+
+    left: 175px;
+    width: 88%;
+    height: 83vh;
     z-index: 1;
+    border-radius: 10px;
   }
