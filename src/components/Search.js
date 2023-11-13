@@ -1,12 +1,65 @@
 // Search.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Search.css';
+
 
 const Search = ({ onSearch }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isExpanded, setIsExpanded] = useState(false);
   const [mapVisible, setMapVisible] = useState(false);
   const [userLocation, setUserLocation] = useState(null);
+  const [businesses, setBusinesses] = useState([]);
+  const [filteredBusinesses, setFilteredBusinesses] = useState([]);
+
+  useEffect(() => {
+    const fetchBusinesses = () => {
+      var formattedCoordinates = {
+        latitude: userLocation.latitude,
+        longitude: userLocation.longitude,
+        radius: 1000,
+      };
+  
+      fetch('http://localhost:4444/business', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formattedCoordinates),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Failed to fetch deals. Server response: ${response.statusText}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          console.log('Response body:', data);
+          setBusinesses(data.data); // Set deals directly from response.data.data
+        })
+        .catch((error) => {
+          console.error('Error fetching businesses:', error.message);
+        });
+    };
+  
+    if (userLocation) {
+      fetchBusinesses();
+    }
+  }, [userLocation]);
+
+  useEffect(() => {
+    if (searchQuery) {
+      const lowerCaseQuery = searchQuery.toLowerCase();
+      console.log(businesses)
+      const filtered = businesses.filter(business =>
+        (business.business_name && business.business_name.toLowerCase().includes(lowerCaseQuery)) ||
+        (business.description && business.description.toLowerCase().includes(lowerCaseQuery))
+      );
+      console.log(filtered)
+      setFilteredBusinesses(filtered);
+    } else {
+      setFilteredBusinesses(businesses);
+    }
+  }, [searchQuery, businesses]);
 
 
   const handleSearchQueryChange = (event) => {
