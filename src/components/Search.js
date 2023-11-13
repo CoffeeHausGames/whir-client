@@ -47,10 +47,31 @@ const Search = ({ onSearch }) => {
     }
   }, [userLocation]);
 
+  // Function to get the location of a business
+  const getBusinessLocation = (business) => {
+    if (business && business.location && business.location.coordinates) {
+      const [latitude, longitude] = business.location.coordinates;
+      return { latitude, longitude };
+    }
+    return null;
+  };
+
+  // Function to show the business location on the map
+  const showBusinessLocationOnMap = (business) => {
+    const businessLocation = getBusinessLocation(business);
+    if (businessLocation) {
+      onSearch(businessLocation);
+      setShowDropdown(false);
+    } else {
+      console.error(`Invalid location data for business: ${business.business_name}`);
+    }
+  };
+
   const handleSearchResultClick = (business) => {
     setSearchQuery(business.business_name);
     setShowDropdown(false);
     setSelectedBusiness(business); // Set the selected business
+    showBusinessLocationOnMap(business); // Show the selected business on the map
   };
 
   useEffect(() => {
@@ -82,6 +103,8 @@ const Search = ({ onSearch }) => {
       onSearch(); // Trigger the onSearch function to show the map
     }
   };
+
+  
 
   // Function to get the user's current location
   const getUserLocation = async () => {
@@ -146,9 +169,7 @@ const Search = ({ onSearch }) => {
         onClick={getUserLocation}
       />
       {showDropdown && renderDropdown()}
-      {selectedBusiness && (
-        <button onClick={() => onSearch(selectedBusiness)}>Show on Map</button>
-      )}    
+
     </div>
   );
 };
