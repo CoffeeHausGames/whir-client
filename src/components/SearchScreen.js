@@ -1,4 +1,3 @@
-// SearchScreen.js
 import React, { useState, useRef } from 'react';
 import Search from './Search';
 import MapComponent from './Map';
@@ -28,15 +27,12 @@ const SearchScreen = () => {
           <MapComponent selectedBusinessLocation={selectedBusinessLocation} />
         </div>
         <div className="deal-display-side">
-          <DealDisplay userLocation={selectedBusinessLocation} />
+          <DealDisplay setSelectedBusinessLocation={setSelectedBusinessLocation} />
         </div>
         </div>
       )}
-      {/* Include the DealDisplay component */}
-
     </div>
   );
 };
 
 export default SearchScreen;
-
