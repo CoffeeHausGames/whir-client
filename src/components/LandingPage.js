@@ -5,7 +5,7 @@ const LandingPage = () => {
   return (
     <div className="landing-page">
             <img
-                src={process.env.PUBLIC_URL + '/images/Landing-page-no-back.png'}
+                src={process.env.PUBLIC_URL + '/images/Hero-page1.png'}
                 alt="Landingpage"
                 className="landingpagetop"
             />
