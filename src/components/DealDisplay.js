@@ -1,11 +1,11 @@
-// DealDisplay.js
 import React, { useEffect, useState } from 'react';
 import './DealDisplay.css';
 import MapComponent from './Map';
 
-const DealDisplay = () => {
+const DealDisplay = ({ setSelectedBusinessLocation }) => {
   const [businesses, setBusinesses] = useState([]);
-  const [selectedBusinessLocation, setSelectedBusinessLocation] = useState(null);
+  const [selectedBusiness, setSelectedBusiness] = useState(null);
+  const [selectedBusinessLocationState, setSelectedBusinessLocationState] = useState(null);
 
   useEffect(() => {
     const fetchBusinesses = () => {
@@ -45,9 +45,27 @@ const DealDisplay = () => {
     fetchBusinesses();
   }, []);
 
-  const handleBusinessClick = (businessLocation) => {
+// Function to get the location of a business
+const getBusinessLocation = (business) => {
+ console.log(`Business: ${JSON.stringify(business)}`);
+ if (business && business.location && business.location.coordinates) {
+   const [longitude, latitude] = business.location.coordinates;
+   return { latitude, longitude };
+ }
+ return null;
+};
+// Function to handle deal click
+const handleDealClick = (business) => {
+  console.log(business);
+  const businessLocation = getBusinessLocation(business);
+  if (businessLocation) {
+    setSelectedBusinessLocationState({ latitude: businessLocation.latitude, longitude: businessLocation.longitude });
     setSelectedBusinessLocation(businessLocation);
-  };
+    setSelectedBusiness(business); // Set the selected business
+  } else {
+    console.error(`Invalid location data for business: ${business.id}`);
+  }
+ };
 
   return (
     <div className="deal-display-container">
@@ -58,12 +76,12 @@ const DealDisplay = () => {
           {business.deal && business.deal.length > 0 ? (
             <ul>
               {business.deal.map((deal) => (
-                <button onClick={() => handleBusinessClick(deal.location)}>
-                <li key={deal.id}>
+                <button onClick={() => handleDealClick(business)}>
+                  <li key={deal.id}>
                     <strong>{deal.name}</strong>: {deal.description}
                     <br />
                     Start Date: {deal.start_date}, End Date: {deal.end_date}  
-                </li>
+                  </li>
                 </button>
               ))}
             </ul>
@@ -72,7 +90,7 @@ const DealDisplay = () => {
           )}
         </div>
       ))}
-      {selectedBusinessLocation && <MapComponent selectedBusinessLocation={selectedBusinessLocation} />}
+      {selectedBusinessLocationState && <MapComponent selectedBusinessLocation={selectedBusinessLocationState} />}
     </div>
   );
 };
