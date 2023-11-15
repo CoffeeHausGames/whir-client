@@ -1,51 +1,78 @@
 // DealDisplay.js
 import React, { useEffect, useState } from 'react';
 import './DealDisplay.css';
+import MapComponent from './Map';
 
-const DealDisplay = ({ userLocation }) => {
-  const [deals, setDeals] = useState([]);
+const DealDisplay = () => {
+  const [businesses, setBusinesses] = useState([]);
+  const [selectedBusinessLocation, setSelectedBusinessLocation] = useState(null);
 
   useEffect(() => {
-    const fetchDeals = async () => {
-      try {
-        if (userLocation && userLocation.latitude && userLocation.longitude) {
-          const response = await fetch('http://localhost:4444/business/deal', {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
+    const fetchBusinesses = () => {
+      const userLocation = JSON.parse(localStorage.getItem('userLocation'));
+
+      if (userLocation && userLocation.latitude !== 0 && userLocation.longitude !== 0) {
+        var formattedCoordinates = {
+          latitude: userLocation.latitude,
+          longitude: userLocation.longitude,
+          radius: 1000,
+        };
+
+        fetch('http://localhost:4444/business', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formattedCoordinates),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`Failed to fetch businesses. Server response: ${response.statusText}`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            setBusinesses(data.data);
+          })
+          .catch((error) => {
+            console.error('Error fetching businesses:', error.message);
           });
-
-          if (!response.ok) {
-            throw new Error(`Failed to fetch deals. Server response: ${response.statusText}`);
-          }
-
-          const data = await response.text();
-
-          // Check if the response is not empty before parsing JSON
-          if (data.trim() !== '') {
-            const jsonData = JSON.parse(data);
-            setDeals(jsonData.data);
-          }
-        }
-      } catch (error) {
-        console.error('Error fetching deals:', error.message);
+      } else {
+        console.log('Please share your location in order to view businesses near you');
       }
     };
 
-    fetchDeals();
-  }, [userLocation]);
+    fetchBusinesses();
+  }, []);
+
+  const handleBusinessClick = (businessLocation) => {
+    setSelectedBusinessLocation(businessLocation);
+  };
 
   return (
     <div className="deal-display-container">
       <h2>Current Deals</h2>
-      <ul>
-        {deals.map((deal) => (
-          <li key={deal.id}>
-            <strong>{deal.title}</strong>: {deal.description}
-          </li>
-        ))}
-      </ul>
+      {businesses.map((business) => (
+        <div key={business.business_name}>
+          <h3>{business.business_name}</h3>
+          {business.deal && business.deal.length > 0 ? (
+            <ul>
+              {business.deal.map((deal) => (
+                <button onClick={() => handleBusinessClick(deal.location)}>
+                <li key={deal.id}>
+                    <strong>{deal.name}</strong>: {deal.description}
+                    <br />
+                    Start Date: {deal.start_date}, End Date: {deal.end_date}  
+                </li>
+                </button>
+              ))}
+            </ul>
+          ) : (
+            <p>No deals available for this business</p>
+          )}
+        </div>
+      ))}
+      {selectedBusinessLocation && <MapComponent selectedBusinessLocation={selectedBusinessLocation} />}
     </div>
   );
 };
