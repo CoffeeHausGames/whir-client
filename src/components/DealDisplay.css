@@ -1,28 +1,86 @@
+.deal-title,
+.deal-business-name,
+.deal-description {
+  text-align: left;
+  margin-left: 10px;
+  font-family: "komet", sans-serif;
+  margin-bottom: 5px; /* Adjusted margin-bottom for all elements */
+}
+
+.deal-title {
+  font-weight: 800;
+  font-size: 22px;
+}
+
+.deal-business-name {
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.deal-description {
+  font-weight: 500;
+  font-style: italic;
+  font-size: 16px;
+}
+
 .deal-display-container {
-    position: absolute;
-    top: 190px;
-    left: 20px;
-    width: 275px;
-    height: 80vh;
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 20px;
-    overflow-y: auto;
-    z-index: 2;
-    border-radius: 10px;
-  }
-  
-  .deal-display-container h2 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-  }
-  
-  .deal-display-container ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .deal-display-container li {
-    margin-bottom: 10px;
-  }
-  
+  position: absolute;
+  top: 190px;
+  left: 20px;
+  width: 305px;
+  height: 80vh;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding-left: 0px;
+  padding-right: 15px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  overflow-y: auto;
+  z-index: 2;
+  border-radius: 10px;
+}
+
+.deal-display-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.deal-display-container::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 10px;
+}
+
+.deal-display-container::-webkit-scrollbar-thumb {
+  background: rgba(209, 209, 209, 0.705);
+  border-radius: 20px;
+}
+
+.deal-display-container h2 {
+  margin-bottom: 10px;
+}
+
+.deal-display-container ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.deal-display-container li {
+  margin-bottom: 10px;
+}
+
+.deal-button-display {
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin: 10px;
+  width: 100%;
+  border-radius: 10px;
+  border: 0.5px solid rgba(0, 0, 0, 0.199);
+}
+
+.deal-button-display:hover {
+  background-color: rgba(255, 193, 22, 0.13);
+  /* box-shadow: 1px 1px 5px 1px #000000; */
+
+}

@@ -69,14 +69,15 @@ return (
     <h2>Current Deals</h2>
     {businesses.map((business) => (
       <div key={business.business_name}>
-        <h3>{business.business_name}</h3>
+        {/* <h3>{business.business_name}</h3> */}
         {business.deal && business.deal.length > 0 ? (
           <ul>
             {business.deal.map((deal) => (
-              <button onClick={() => handleDealClick(business)} key={deal.id}>
+              <button onClick={() => handleDealClick(business)} key={deal.id} className="deal-button-display">
                 <li>
-                  <strong>{deal.name}</strong>: {deal.description}
-                  <br />
+                  <p className="deal-title">{deal.name}</p> 
+                  <p className="deal-business-name">{business.business_name}</p>
+                  <p className="deal-description">{deal.description}</p>
                   Start Date: {deal.start_date}, End Date: {deal.end_date}
                 </li>
               </button>
