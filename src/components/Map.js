@@ -54,7 +54,7 @@ const MapComponent = ({ selectedBusinessLocation }) => {
       // Pan and zoom to the selected location
       mapRef.current.flyTo(
         [selectedBusinessLocation.latitude, selectedBusinessLocation.longitude],
-        16
+        18
       );
     }
   }, [selectedBusinessLocation]);
