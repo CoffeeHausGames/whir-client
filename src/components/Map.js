@@ -31,7 +31,7 @@ const MapComponent = ({ selectedBusinessLocation }) => {
     initializeMap();
 
     const customBusinessIcon = L.icon({
-      iconUrl: '../images/whir_map_poi.png',
+      iconUrl: '../images/whir_map_poi_web.png',
       iconSize: [32],
       iconAnchor: [16, 32],
       popupAnchor: [0, -32],
