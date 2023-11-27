@@ -1,0 +1,40 @@
+/* CategoryDeals.css */
+.category-deals-container {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 20px;
+    top: 500px;
+  }
+  
+  .category-dropdown {
+    flex: 1;
+    margin-right: 20px;
+  }
+  
+  .category-dropdown select {
+    width: 100%;
+    padding: 10px;
+  }
+  
+  .deals-display {
+    flex: 2;
+  }
+  
+  .deal-cards {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .deal-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 10px;
+    width: 200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Add more styling as needed */
+  
