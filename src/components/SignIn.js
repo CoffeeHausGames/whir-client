@@ -55,6 +55,25 @@ function SignIn() {
     }
   }
 
+  // Load the google sign-in button script
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://accounts.google.com/gsi/client';
+    script.async = true;
+    document.body.appendChild(script);
+  
+    // Add meta tag
+    const meta = document.createElement('meta');
+    meta.name = 'referrer';
+    meta.content = 'no-referrer-when-downgrade';
+    document.head.appendChild(meta);
+  
+    return () => {
+      document.body.removeChild(script);
+      document.head.removeChild(meta);
+    };
+  }, []);
+
   useEffect(() => {
     setShowComponent(true);
 
@@ -99,6 +118,24 @@ function SignIn() {
           <button type="submit" className="custom-button">
             Sign In
           </button>
+
+          <div id="g_id_onload"
+            data-client_id="709491539301-kovmas7f7dnfjv2asj1uas78c6p7640b.apps.googleusercontent.com"
+            data-context="signin"
+            data-ux_mode="redirect"
+            data-login_uri="http://localhost:4444/users/login/google"
+            data-auto_prompt="false"
+            referrer-policy="no-referrer-when-downgrade">
+          </div>
+
+          <div className="g_id_signin"
+            data-type="standard"
+            data-shape="pill"
+            data-theme="filled_blue"
+            data-text="signin_with"
+            data-size="large"
+            data-logo_alignment="left">
+          </div>
         </form>
 
       </div>

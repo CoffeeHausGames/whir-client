@@ -1,11 +1,35 @@
 // Home.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useHistory from react-router-dom
+// import { AuthContext } from '../AuthContext'; // Import the AuthContext
+import { useAuth } from '../AuthContext';
 import './Home.css';
+import { apiRequest } from '../utils/NetworkContoller'; // Assuming api.js is in the same directory
 
 function Home() {
   const [showComponent, setShowComponent] = useState(false);
   const navigate = useNavigate(); // Create a history object
+  const { signIn } = useAuth(); // Get the signIn function from the context
+
+  const [showCookiePopup, setShowCookiePopup] = useState(false);
+
+  // Show the cookie popup when the component mounts
+  useEffect(() => {
+    const consent = localStorage.getItem('cookie-consent');
+    if (!consent) {
+      setShowCookiePopup(true);
+    }
+  }, []);
+
+  const handleAcceptCookies = () => {
+    localStorage.setItem('cookie-consent', 'true');
+    setShowCookiePopup(false);
+  };
+
+  const handleDeclineCookies = () => {
+    localStorage.setItem('cookie-consent', 'false');
+    setShowCookiePopup(false);
+  };
 
   useEffect(() => {
     setShowComponent(true);
@@ -17,11 +41,30 @@ function Home() {
     return () => clearTimeout(transitionDelay);
   }, []);
 
-  const handleSearch = (searchQuery) => {
-    // Implement the logic for handling the search query in your Home component
-    console.log('Search Query:', searchQuery);
-    // You can perform actions like fetching data, updating state, etc.
-  };
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    const user = storedUser ? JSON.parse(storedUser) : null;
+  
+    if (!user || !user.authenticated) {
+      console.log('Checking user authentication')
+      // Make a request to your server to check if the user is authenticated
+      apiRequest('/v1/users/login', 'GET', null, {}, true)
+        .then(data => {
+          if (data.data) {
+            // If the user is authenticated, store the user data in local storage, update the context, and navigate to the logged in page
+            console.log('User Authentication Successful');
+            const user = { ...data.user, authenticated: true };
+            localStorage.setItem('user', JSON.stringify(user));
+            console.log(localStorage.getItem('user'));
+            signIn();
+            navigate('/home');
+          }
+        })
+        .catch((error) => {
+          console.warn('Error:', error);
+        });
+    }
+  }, [navigate, signIn]);
 
   const navigateToSearchScreen = () => {
     // Use the history object to navigate to /searchscreen
