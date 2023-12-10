@@ -1,12 +1,12 @@
 // Home.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useHistory from react-router-dom
-// import { AuthContext } from '../AuthContext'; // Import the AuthContext
-import { useAuth } from '../AuthContext';
+import { useAuth } from '../utils/AuthContext';
 import './Home.css';
 import { apiRequest } from '../utils/NetworkContoller'; // Assuming api.js is in the same directory
 
 function Home() {
+  // eslint-disable-next-line no-unused-vars
   const [showComponent, setShowComponent] = useState(false);
   const navigate = useNavigate(); // Create a history object
   const { signIn } = useAuth(); // Get the signIn function from the context
@@ -44,11 +44,14 @@ function Home() {
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     const user = storedUser ? JSON.parse(storedUser) : null;
-  
-    if (!user || !user.authenticated) {
+    
+    const storedBusinessUser = localStorage.getItem('businessData');
+    const businessUser = storedBusinessUser ? JSON.parse(storedBusinessUser) : null;
+    
+    if ((!user || !user.authenticated) && (!businessUser || !businessUser.authenticated)) {
       console.log('Checking user authentication')
       // Make a request to your server to check if the user is authenticated
-      apiRequest('/v1/users/login', 'GET', null, {}, true)
+      apiRequest('/user', 'GET', null, {}, true)
         .then(data => {
           if (data.data) {
             // If the user is authenticated, store the user data in local storage, update the context, and navigate to the logged in page
@@ -94,17 +97,15 @@ function Home() {
         </button>
         {/* Add other buttons or actions as needed */}
       </div>
-      {/* <div className="main-text-home">
-        <div className={`home ${showComponent ? 'visible' : 'transition-effect'}`}>
-          <h1>Welcome to Whir</h1>
-          <p>
-            Discover Local Delights with Whir: Your one-stop destination for all things local.
-            Explore exclusive deals, events, and promotions, while supporting community businesses.
-            Join the Whir community to unlock unique membership perks and be part of the movement
-            that revitalizes local commerce
-          </p>
+      {showCookiePopup && (
+        <div className="cookie-popup">
+          <p>We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+          <div className="button-group">
+            <button onClick={handleAcceptCookies}>Accept</button>
+            <button onClick={handleDeclineCookies}>Decline</button>
+          </div>
         </div>
-      </div> */}
+      )}
     </div>
   );
 }

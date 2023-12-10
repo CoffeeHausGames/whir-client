@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { useAuth } from '../AuthContext';
+import { useAuth } from '../utils/AuthContext';
 import './CustomRepeatModal.css';
+import { apiRequestWithAuthRetry } from '../utils/NetworkContoller';
 
 function CustomRepeatModal({ isOpen, onClose }) {
   const [deal, setDeal] = useState({
@@ -21,17 +22,18 @@ function CustomRepeatModal({ isOpen, onClose }) {
     setDeal({ ...deal, [name]: value });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
+    // If auth token is null then we are using cookies for auth and this shouldn't matter
     const businessAuthToken = authContext.businessUser
       ? authContext.businessUser.token
       : null;
 
-    if (!businessAuthToken) {
-      console.error('Business user authentication token not found.');
-      return;
-    }
+    // if (!businessAuthToken) {
+    //   console.error('Business user authentication token not found.');
+    //   return;
+    // }
 
     // Structure the deal object to match the expected format with timestamps
     const formattedDeal = {
@@ -44,37 +46,28 @@ function CustomRepeatModal({ isOpen, onClose }) {
       description: deal.description,
     };
 
-    fetch('http://localhost:4444/business/deal', {
-      method: 'POST',
-      headers: {
+    try {
+      const response = await apiRequestWithAuthRetry('/business/deal', 'POST', formattedDeal, {
         'Content-Type': 'application/json',
         Authorization: `${businessAuthToken}`,
-      },
-      body: JSON.stringify(formattedDeal),
-    })
-      .then((response) => response.text())
-      .then((data) => {
-        let jsonData;
-        try {
-          jsonData = data ? JSON.parse(data) : {};
-        } catch (e) {
-          console.error('Invalid JSON:', e);
-        }
-        console.log(jsonData);
-        setDeal({
-          name: '',
-          start_time: '',
-          end_time: '',
-          day_of_week: '',
-          start_date: '',
-          end_date: '',
-          description: '',
-        });
-        onClose();
-      })
-      .catch((error) => {
-        console.error('There was an error!', error);
+      }, true, businessAuthToken);
+  
+      console.log(response);
+  
+      setDeal({
+        name: '',
+        start_time: '',
+        end_time: '',
+        day_of_week: '',
+        start_date: '',
+        end_date: '',
+        description: '',
       });
+  
+      onClose();
+    } catch (error) {
+      console.error('There was an error!', error);
+    }
   };
 
   const handleCancel = () => {

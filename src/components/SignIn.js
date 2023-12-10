@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../AuthContext';
+import { useAuth } from '../utils/AuthContext';
 import './SignIn.css';
+import { apiRequest } from '../utils/NetworkContoller';
 
 function SignIn() {
+  const [cookieConsent, setCookieConsent] = useState(false);
+
+  useEffect(() => {
+    const consent = localStorage.getItem('cookie-consent');
+    setCookieConsent(consent === 'true');
+  }, []);
+
   const navigate = useNavigate();
   const { user, signIn } = useAuth(); // Get the signIn function from the context
   const [showComponent, setShowComponent] = useState(false);
@@ -23,26 +31,22 @@ function SignIn() {
     }
 
     try {
-      const response = await fetch('http://localhost:4444/users/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+      const response = await apiRequest('/users/login', 'POST', formData, {
+        'Content-Type': 'application/json',
       });
-
+    
       if (response.ok) {
-        const responseData = await response.json();
-
+        const responseData = await response.data;
+    
         // Replace the following line with the check you use to distinguish business users
-        if (responseData.data.userType === 'business') {
+        if (responseData.userType === 'business') {
           // Handle business user sign-in
           console.log('Business User Authentication Successful');
           // Business user sign-in logic
         } else {
           // Handle regular user sign-in
           console.log('User Authentication Successful');
-          const user = { ...responseData.data, authenticated: true };
+          const user = { ...responseData, authenticated: true };
           localStorage.setItem('user', JSON.stringify(user));
           signIn(); // Call the signIn function to update the context
           navigate('/home'); // Redirect to the protected route
@@ -119,23 +123,27 @@ function SignIn() {
             Sign In
           </button>
 
-          <div id="g_id_onload"
-            data-client_id="709491539301-kovmas7f7dnfjv2asj1uas78c6p7640b.apps.googleusercontent.com"
-            data-context="signin"
-            data-ux_mode="redirect"
-            data-login_uri="http://localhost:4444/users/login/google"
-            data-auto_prompt="false"
-            referrer-policy="no-referrer-when-downgrade">
-          </div>
+          {cookieConsent && (
+            <>
+            <div id="g_id_onload"
+              data-client_id="709491539301-kovmas7f7dnfjv2asj1uas78c6p7640b.apps.googleusercontent.com"
+              data-context="signin"
+              data-ux_mode="redirect"
+              data-login_uri="http://localhost:4444/v1/users/login/google"
+              data-auto_prompt="false"
+              referrer-policy="no-referrer-when-downgrade">
+            </div>
 
-          <div className="g_id_signin"
-            data-type="standard"
-            data-shape="pill"
-            data-theme="filled_blue"
-            data-text="signin_with"
-            data-size="large"
-            data-logo_alignment="left">
-          </div>
+            <div className="g_id_signin"
+              data-type="standard"
+              data-shape="pill"
+              data-theme="filled_blue"
+              data-text="signin_with"
+              data-size="medium"
+              data-logo_alignment="left">
+            </div>
+            </>
+          )}
         </form>
 
       </div>

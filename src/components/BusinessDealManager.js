@@ -2,8 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import CustomRepeatModal from './CustomRepeatModal';
 import DealBox from './DealBox';
-import { useAuth } from '../AuthContext';
+import { useAuth } from '../utils/AuthContext';
 import './BusinessDealManager.css';
+import { apiRequestWithAuthRetry } from '../utils/NetworkContoller';
 
 function BusinessDealManager() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,28 +28,11 @@ function BusinessDealManager() {
   };
 
   const fetchDeals = () => {
-    const businessAuthToken = authContext.businessUser ? authContext.businessUser.token : null;
-
-    if (!businessAuthToken) {
-      console.error('Business user authentication token not found.');
-      return;
-    }
-
-    fetch('http://localhost:4444/business/deal', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `${businessAuthToken}`,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Failed to fetch deals. Server response: ${response.statusText}`);
-        }
-        return response.json();
-      })
+    const businessAuthToken = authContext.businessUser ? authContext.businessUser.token : null;    
+    apiRequestWithAuthRetry('/business/deal', 'GET', null, undefined, businessAuthToken)
       .then((data) => {
-        setDeals(data.data); // Set deals directly from response.data.data
+        console.log(data)
+        setDeals(data);
       })
       .catch((error) => {
         console.error('Error fetching deals:', error.message);
