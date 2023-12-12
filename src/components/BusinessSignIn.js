@@ -24,18 +24,18 @@ function BusinessSignIn() {
     const response = await apiRequest('/business/login', 'POST', formData, {
       'Content-Type': 'application/json',
     });
+    console.log(response)
 
     const business = { 
       ...response.data, 
       authenticated: true, 
-      token: response.data.auth_token, 
-      refreshToken: response.data.refresh_token 
+      token: response.auth_token, 
+      refreshToken: response.refresh_token 
     };
     localStorage.setItem('businessData', JSON.stringify(business));
-    console.log('Business authenticated successfully');
     businessSignIn();
-    navigate('/searchscreen');
-    window.location.reload();
+    // navigate('/searchscreen');
+    // window.location.reload();
   } catch (error) {
     console.error('Business authentication failed:', error.message);
   }

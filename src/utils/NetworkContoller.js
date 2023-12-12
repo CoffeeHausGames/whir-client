@@ -46,17 +46,28 @@ export function apiRequest(endpoint, method, data = null, headers = {}, includeC
       if (!response.ok) {
         throw response;
       }
+
       return response.json().then(data => ({
         data: data.data,
         status: response.status,
         ok: response.ok,
-        auth_token: response.headers.get('X-Auth-Token'),
-        refresh_token: response.headers.get('X-Refresh-Token'),
+        auth_token: response.headers.get('x-auth-token'),
+        refresh_token: response.headers.get('x-refresh-token'),
       }));
     });
 }
 
 export function apiRequestWithAuthRetry(endpoint, method, data = null, headers = {}, token = null) {
+  let cookieConsent = 'false'; // Default to 'false'
+
+  if (typeof localStorage !== 'undefined') {
+    cookieConsent = localStorage.getItem('cookie-consent');
+  }
+
+  if (cookieConsent === 'false') {
+    return apiRequest(endpoint, method, data, headers, false);
+  }
+
   return apiRequest(endpoint, method, data, headers, true)
     .catch((error) => {
       // If the status code indicates an authentication issue, retry with the authentication header
@@ -67,7 +78,6 @@ export function apiRequestWithAuthRetry(endpoint, method, data = null, headers =
         }
 
         headers.Authorization = `${token}`;
-        console.log(token)
 
         return apiRequest(endpoint, method, data, headers, false);
       }

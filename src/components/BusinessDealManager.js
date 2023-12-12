@@ -15,7 +15,7 @@ function BusinessDealManager() {
   useEffect(() => {
     // Fetch deals when the component mounts
     fetchDeals();
-  });
+  }, []); // Empty dependency array
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -28,11 +28,12 @@ function BusinessDealManager() {
   };
 
   const fetchDeals = () => {
-    const businessAuthToken = authContext.businessUser ? authContext.businessUser.token : null;    
+    console.log(authContext.businessUser.token)
+    const businessAuthToken = authContext.businessUser ? authContext.businessUser.token : null; 
     apiRequestWithAuthRetry('/business/deal', 'GET', null, undefined, businessAuthToken)
       .then((data) => {
-        console.log(data)
-        setDeals(data);
+        console.log('Deals:', data);
+        setDeals(data.data);
       })
       .catch((error) => {
         console.error('Error fetching deals:', error.message);

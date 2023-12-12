@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
      return businessUser && businessUser.authenticated ? businessUser : null;
    } catch (error) {
      console.error('Error parsing business user data from localStorage:', error);
-     return null;
+     return null; 
    }
  });
 
