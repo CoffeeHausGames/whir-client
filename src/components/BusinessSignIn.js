@@ -24,7 +24,6 @@ function BusinessSignIn() {
     const response = await apiRequest('/business/login', 'POST', formData, {
       'Content-Type': 'application/json',
     });
-    console.log(response)
 
     const business = { 
       ...response.data, 
@@ -34,7 +33,7 @@ function BusinessSignIn() {
     };
     localStorage.setItem('businessData', JSON.stringify(business));
     businessSignIn();
-    // navigate('/searchscreen');
+    navigate('/searchscreen');
     // window.location.reload();
   } catch (error) {
     console.error('Business authentication failed:', error.message);

@@ -32,7 +32,6 @@ function BusinessDealManager() {
     const businessAuthToken = authContext.businessUser ? authContext.businessUser.token : null; 
     apiRequestWithAuthRetry('/business/deal', 'GET', null, undefined, businessAuthToken)
       .then((data) => {
-        console.log('Deals:', data);
         setDeals(data.data);
       })
       .catch((error) => {
@@ -41,7 +40,6 @@ function BusinessDealManager() {
   };
 
   const handleDealClick = (deal) => {
-    console.log('Deal clicked:', deal);
     setSelectedDeal(deal); // Update the selected deal
   };
 
