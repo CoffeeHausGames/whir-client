@@ -1,32 +1,34 @@
-// SearchScreen.js
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import Search from './Search';
 import MapComponent from './Map';
+import DealDisplay from './DealDisplay';
 import './SearchScreen.css';
 
-const SearchScreen = ({ userLocation, onSearch }) => {
+const SearchScreen = () => {
   const [isMapVisible, setIsMapVisible] = useState(false);
-  const [businesses, setBusinesses] = useState([]);
+  const [selectedBusinessLocation, setSelectedBusinessLocation] = useState(null);
   const mapRef = useRef(null);
 
-  const toggleMapVisibility = (businesses) => {
+  const toggleMapVisibility = () => {
     setIsMapVisible(!isMapVisible);
-    setBusinesses(businesses);
   };
 
-  useEffect(() => {
-    if (mapRef.current) {
-      // Perform any map-related actions here
-    }
-  }, [isMapVisible]);
+  const handleSearch = (businessLocation) => {
+    setSelectedBusinessLocation(businessLocation);
+    toggleMapVisibility();
+  };
 
   return (
     <div>
-      <Search onSearch={toggleMapVisibility} />
+      <Search onSearch={handleSearch} />
       {isMapVisible && (
+        <div className="deal-content-box">
         <div className="map-container" ref={mapRef}>
-          {/* Pass userLocation as a prop */}
-          <MapComponent userLocation={userLocation} businesses={businesses} />
+          <MapComponent selectedBusinessLocation={selectedBusinessLocation} />
+        </div>
+        <div className="deal-display-side">
+          <DealDisplay setSelectedBusinessLocation={setSelectedBusinessLocation} />
+        </div>
         </div>
       )}
     </div>

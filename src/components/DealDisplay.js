@@ -22,7 +22,6 @@ const DealDisplay = ({ setSelectedBusinessLocation }) => {
           const response = await apiRequest('/business', 'POST', formattedCoordinates, {
             'Content-Type': 'application/json',
           });
-          console.log(response.data)
           // Calculate distance for each business and add it as a property
           const businessesWithDistance = response.data.map((business) => ({
             ...business,
