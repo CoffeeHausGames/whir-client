@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SignUp.css';
+import { apiRequest } from '../utils/NetworkContoller';
 
 function SignUp() {
   const navigate = useNavigate();
@@ -21,19 +22,12 @@ function SignUp() {
     // Send a POST request to your backend to handle user registration
     // You should replace 'YOUR_BACKEND_API_URL' with your actual API endpoint.
     try {
-      const response = await fetch('http://localhost:4444/users/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+      const response = await apiRequest('/users/signup', 'POST', formData, {
+        'Content-Type': 'application/json',
       });
-
-      // Log the response status and data
-      console.log('Response status:', response.status);
-      const responseData = await response.json();
-      console.log('Response data:', responseData);
-
+    
+      console.log('Response data:', response);
+    
       if (response.ok) {
         console.log('User registered successfully');
         navigate('/successscreen');

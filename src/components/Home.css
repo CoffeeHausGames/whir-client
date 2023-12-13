@@ -39,7 +39,6 @@
   }
 }
 
-
 /* Define the transition effect */
 .transition-effect {
   opacity: 1;
@@ -107,7 +106,52 @@
   box-shadow: 2px 2px 20px 2px;
 }
 
+.cookie-popup {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  flex-wrap: wrap;
+}
 
+.cookie-popup p {
+  margin: 0;
+  max-width: 70%;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  max-width: 200px; /* Adjust as needed */
+}
+
+.cookie-popup button {
+  margin-left: 10px;
+  padding: 10px 20px;
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+}
+
+.cookie-popup button:hover {
+  background-color: #45a049;
+}
+
+.cookie-popup button:last-child {
+  background-color: #f44336;
+}
+
+.cookie-popup button:last-child:hover {
+  background-color: #da190b;
+}
 
 
 /* 

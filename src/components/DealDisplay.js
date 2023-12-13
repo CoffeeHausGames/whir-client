@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './DealDisplay.css';
+import { apiRequest } from '../utils/NetworkContoller';
 
 const DealDisplay = ({ setSelectedBusinessLocation }) => {
   const [businesses, setBusinesses] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [selectedBusiness, setSelectedBusiness] = useState(null);
 
   useEffect(() => {
-    const fetchBusinesses = () => {
+    const fetchBusinesses = async () => {
       const userLocation = JSON.parse(localStorage.getItem('userLocation'));
 
       if (userLocation && userLocation.latitude !== 0 && userLocation.longitude !== 0) {
@@ -16,34 +18,23 @@ const DealDisplay = ({ setSelectedBusinessLocation }) => {
           radius: 1000,
         };
 
-        fetch('http://localhost:4444/business', {
-          method: 'POST',
-          headers: {
+        try {
+          const response = await apiRequest('/business', 'POST', formattedCoordinates, {
             'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(formattedCoordinates),
-        })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error(`Failed to fetch businesses. Server response: ${response.statusText}`);
-            }
-            return response.json();
-          })
-          .then((data) => {
-            // Calculate distance for each business and add it as a property
-            const businessesWithDistance = data.data.map((business) => ({
-              ...business,
-              distance: calculateDistance(userLocation, business.location.coordinates),
-            }));
-
-            // Sort businesses based on distance
-            const sortedBusinesses = businessesWithDistance.sort((a, b) => a.distance - b.distance);
-
-            setBusinesses(sortedBusinesses);
-          })
-          .catch((error) => {
-            console.error('Error fetching businesses:', error.message);
           });
+          // Calculate distance for each business and add it as a property
+          const businessesWithDistance = response.data.map((business) => ({
+            ...business,
+            distance: calculateDistance(userLocation, business.location.coordinates),
+          }));
+
+          // Sort businesses based on distance
+          const sortedBusinesses = businessesWithDistance.sort((a, b) => a.distance - b.distance);
+
+          setBusinesses(sortedBusinesses);
+        } catch (error) {
+          console.error('Error fetching businesses:', error.message);
+        }
       } else {
         console.log('Please share your location in order to view businesses near you');
       }

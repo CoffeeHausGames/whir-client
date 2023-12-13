@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Search.css';
+import { apiRequest } from '../utils/NetworkContoller';
 
 const Search = ({ onSearch }) => {
  const [searchQuery, setSearchQuery] = useState('');
@@ -9,43 +10,34 @@ const Search = ({ onSearch }) => {
  const [businesses, setBusinesses] = useState([]);
  const [filteredBusinesses, setFilteredBusinesses] = useState([]);
  const [showDropdown, setShowDropdown] = useState(false);
+ // eslint-disable-next-line no-unused-vars
  const [selectedBusiness, setSelectedBusiness] = useState(null);
 
 
-  useEffect(() => {
-    const fetchBusinesses = () => {
-      var formattedCoordinates = {
-        latitude: userLocation.latitude,
-        longitude: userLocation.longitude,
-        radius: 1000,
-      };
-
-      fetch('http://localhost:4444/business', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formattedCoordinates),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`Failed to fetch deals. Server response: ${response.statusText}`);
-          }
-          return response.json();
-        })
-        .then((data) => {
-          console.log('Response body:', data);
-          setBusinesses(data.data); // Set deals directly from response.data.data
-        })
-        .catch((error) => {
-          console.error('Error fetching businesses:', error.message);
-        });
+ useEffect(() => {
+  const fetchBusinesses = async () => {
+    var formattedCoordinates = {
+      latitude: userLocation.latitude,
+      longitude: userLocation.longitude,
+      radius: 1000,
     };
 
-    if (userLocation) {
-      fetchBusinesses();
+    try {
+      const response = await apiRequest('/business', 'POST', formattedCoordinates, {
+        'Content-Type': 'application/json',
+      });
+
+      console.log('Response body:', response);
+      setBusinesses(response.data); // Set deals directly from response.data.data
+    } catch (error) {
+      console.error('Error fetching businesses:', error.message);
     }
-  }, [userLocation]);
+  };
+
+  if (userLocation) {
+    fetchBusinesses();
+  }
+}, [userLocation]);
 
   // Function to get the location of a business
   const getBusinessLocation = (business) => {

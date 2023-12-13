@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { apiRequest } from '../utils/NetworkContoller';
 
 const AuthContext = createContext();
 
@@ -19,13 +20,13 @@ export const AuthProvider = ({ children }) => {
  });
 
  const [businessUser, setBusinessUser] = useState(() => {
-   const businessUserData = localStorage.getItem('businessAuthToken');
+   const businessUserData = localStorage.getItem('businessData');
    try {
      const businessUser = businessUserData ? JSON.parse(businessUserData) : JSON.parse('{}');
      return businessUser && businessUser.authenticated ? businessUser : null;
    } catch (error) {
      console.error('Error parsing business user data from localStorage:', error);
-     return null;
+     return null; 
    }
  });
 
@@ -40,8 +41,21 @@ export const AuthProvider = ({ children }) => {
  };
 
  const signOut = () => {
-  setUser(null);
-  localStorage.removeItem('user');
+  // Request to the server to clear the HttpOnly cookie
+  apiRequest('/users/logout', 'POST', null, {}, true)
+    .then(response => {
+      console.log('Response:', response); // Print the response
+      if (!response.ok) {
+        throw new Error('Failed to clear HttpOnly cookie');
+      }
+
+      // Clear local user data
+      setUser(null);
+      localStorage.removeItem('user');
+    })
+    .catch(error => {
+      console.error('Error during sign out:', error);
+    });
 };
 
  const businessSignIn = () => {
@@ -55,14 +69,14 @@ export const AuthProvider = ({ children }) => {
 
  const businessSignOut = () => {
   setBusinessUser(null);
-  localStorage.removeItem('businessAuthToken');
+  localStorage.removeItem('businessData');
   setIsBusinessUserAuthenticated(false);
 };
 
  useEffect(() => {
    const handleStorageChange = () => {
      const userData = localStorage.getItem('user');
-     const businessUserData = localStorage.getItem('businessAuthToken');
+     const businessUserData = localStorage.getItem('businessData');
 
      try {
        const user = userData ? JSON.parse(userData) : null;

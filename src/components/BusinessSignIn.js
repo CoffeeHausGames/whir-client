@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../AuthContext';
+import { useAuth } from '../utils/AuthContext';
 import './SignIn.css';
+import { apiRequest } from '../utils/NetworkContoller';
 
 function BusinessSignIn() {
  const navigate = useNavigate();
@@ -13,35 +14,31 @@ function BusinessSignIn() {
  });
 
  const handleSubmit = async (e) => {
-   e.preventDefault();
-   console.log('Sending business sign-in request:', formData);
-   if (businessUser && businessUser.authenticated) {
-     console.error('A business user is already authenticated');
-     return;
-   }
-   try {
-     const response = await fetch('http://localhost:4444/business/login', {
-       method: 'POST',
-       headers: {
-         'Content-Type': 'application/json',
-       },
-       body: JSON.stringify(formData),
-     });
-     if (response.ok) {
-       const responseData = await response.json();
-       const business = { ...responseData.data, authenticated: true };
-       localStorage.setItem('businessAuthToken', JSON.stringify(business));
-       console.log('Business authenticated successfully');
-       businessSignIn();
-       navigate('/searchscreen');
-       window.location.reload();
-     } else {
-       console.error('Business authentication failed');
-     }
-   } catch (error) {
-     console.error('Error:', error);
-   }
- };
+  e.preventDefault();
+  console.log('Sending business sign-in request:', formData);
+  if (businessUser && businessUser.authenticated) {
+    console.error('A business user is already authenticated');
+    return;
+  }
+  try {
+    const response = await apiRequest('/business/login', 'POST', formData, {
+      'Content-Type': 'application/json',
+    });
+
+    const business = { 
+      ...response.data, 
+      authenticated: true, 
+      token: response.auth_token, 
+      refreshToken: response.refresh_token 
+    };
+    localStorage.setItem('businessData', JSON.stringify(business));
+    businessSignIn();
+    navigate('/searchscreen');
+    // window.location.reload();
+  } catch (error) {
+    console.error('Business authentication failed:', error.message);
+  }
+};
 
  useEffect(() => {
    setShowComponent(true);

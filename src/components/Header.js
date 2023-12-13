@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Header.css';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../AuthContext';
+import { useAuth } from '../utils/AuthContext';
 
 const Header = () => {
   const { user, businessUser, signOut, businessSignOut, isBusinessUserAuthenticated } = useAuth();
@@ -12,7 +12,7 @@ const Header = () => {
     const handleStorageChange = () => {
       // Handle changes in localStorage data for user and business user
       const userStorageData = localStorage.getItem('user');
-      const businessUserStorageData = localStorage.getItem('businessAuthToken');
+      const businessUserStorageData = localStorage.getItem('businessData');
 
       // Parse JSON data only if it exists
       const user = userStorageData ? JSON.parse(userStorageData) : null;
@@ -46,7 +46,7 @@ const Header = () => {
   };
 
   const handleBusinessSignOut = () => {
-    localStorage.removeItem('businessAuthToken');
+    localStorage.removeItem('businessData');
     businessSignOut();
     navigate('/signin');
   };

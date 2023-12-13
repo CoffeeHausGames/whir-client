@@ -20,7 +20,7 @@ import HomeSpotlight from './components/HomeSpotlight';
 import LandingPage from './components/LandingPage';
 import Search from './components/Search';
 import MapComponent from './components/Map';
-import { AuthProvider } from './AuthContext'; // Import AuthProvider
+import { AuthProvider } from './utils/AuthContext'; // Import AuthProvider
 
 function App() {
   return (

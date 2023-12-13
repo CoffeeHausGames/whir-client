@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './DealBox.css';
-import { useAuth } from '../AuthContext';
+import { useAuth } from '../utils/AuthContext';
+import { apiRequest } from '../utils/NetworkContoller';
 
 const DealBox = ({ deals, onDealClick, selectedDeal }) => {
   const [isEditMode, setIsEditMode] = useState(false);
@@ -26,16 +27,16 @@ const DealBox = ({ deals, onDealClick, selectedDeal }) => {
     setEditedDeal({ ...selectedDeal });
   };
 
-  const handleSaveClick = () => {
+  const handleSaveClick = async () => {
     const businessAuthToken = authContext.businessUser
       ? authContext.businessUser.token
       : null;
-
+  
     if (!businessAuthToken) {
       console.error('Business user authentication token not found.');
       return;
     }
-
+  
     const updatedDeal = {
       id: editedDeal.id, // Include the deal ID in the body
       name: editedDeal.name,
@@ -46,28 +47,25 @@ const DealBox = ({ deals, onDealClick, selectedDeal }) => {
       end_date: new Date(editedDeal.end_date).toISOString(),
       description: editedDeal.description,
     };
-
+  
     console.log('Updated Deal Body:', updatedDeal);
-
-    fetch(`http://localhost:4444/business/deal`, {
-      method: 'PUT',
-      headers: {
+  
+    try {
+      const response = await apiRequest('/business/deal', 'PUT', updatedDeal, {
         'Content-Type': 'application/json',
         Authorization: `${businessAuthToken}`,
-      },
-      body: JSON.stringify(updatedDeal),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Failed to update deal. Server response: ${response.statusText}`);
-        }
-        // If successful, toggle back to view mode and update the selected deal
-        setIsEditMode(false);
-        onDealClick(editedDeal);
-      })
-      .catch((error) => {
-        console.error('Error updating deal:', error.message);
       });
+  
+      if (!response.ok) {
+        throw new Error(`Failed to update deal. Server response: ${response.statusText}`);
+      }
+  
+      // If successful, toggle back to view mode and update the selected deal
+      setIsEditMode(false);
+      onDealClick(editedDeal);
+    } catch (error) {
+      console.error('Error updating deal:', error.message);
+    }
   };
 
   const handleDeleteClick = () => {
@@ -75,36 +73,33 @@ const DealBox = ({ deals, onDealClick, selectedDeal }) => {
     setShowDeleteConfirmation(true);
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
     const businessAuthToken = authContext.businessUser
       ? authContext.businessUser.token
       : null;
-
+  
     if (!businessAuthToken) {
       console.error('Business user authentication token not found.');
       return;
     }
-
-    fetch(`http://localhost:4444/business/deal`, {
-      method: 'DELETE',
-      headers: {
+  
+    try {
+      const response = await apiRequest('/business/deal', 'DELETE', { id: selectedDeal.id }, {
         'Content-Type': 'application/json',
         Authorization: `${businessAuthToken}`,
-      },
-      body: JSON.stringify({ id: selectedDeal.id }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Failed to delete deal. Server response: ${response.statusText}`);
-        }
-        // If successful, close the delete confirmation modal and refresh the page
-        setShowDeleteConfirmation(false);
-        onDealClick(null); // Deselect the current deal
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.error('Error deleting deal:', error.message);
       });
+  
+      if (!response.ok) {
+        throw new Error(`Failed to delete deal. Server response: ${response.statusText}`);
+      }
+  
+      // If successful, close the delete confirmation modal and refresh the page
+      setShowDeleteConfirmation(false);
+      onDealClick(null); // Deselect the current deal
+      window.location.reload();
+    } catch (error) {
+      console.error('Error deleting deal:', error.message);
+    }
   };
 
   const handleCancelDelete = () => {

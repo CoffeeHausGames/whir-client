@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './UserProfile.css';
+import { apiRequest } from '../utils/NetworkContoller';
 
 function UserProfile(props) {
  const navigate = useNavigate();
@@ -9,7 +10,7 @@ function UserProfile(props) {
  const [user, setUser] = useState(null);
 
  useEffect(() => {
-   const url = 'http://localhost:4444/business';
+   const url = '/business';
 
    // Define the data you want to send to the server
    const data = {
@@ -18,28 +19,21 @@ function UserProfile(props) {
 
    console.log('Data being sent:', data);
 
-   fetch(url, {
-     method: 'POST',
-     headers: {
-       'Content-Type': 'application/json',
-     },
-     body: JSON.stringify(data),
-   })
-     .then((response) => {
-       if (!response.ok) {
-         throw new Error('Network response was not ok');
-       }
-       return response.text();
-     })
-     .then((text) => {
-       const data = JSON.parse(text);
-       console.log('Data received:', data);
-       setUser(data.user);
-       setBusiness(data.business);
-     })
-     .catch((error) => {
-       console.error('Error:', error);
-     });
+   apiRequest(url, 'POST', data, {
+    'Content-Type': 'application/json',
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      console.log('Data received:', response.data);
+      //TODO I don't believe we pass any data to these methods?
+      setUser(response.data.user);
+      setBusiness(response.data.business);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
 
    setShowComponent(true);
    const transitionDelay = setTimeout(() => {
@@ -50,7 +44,7 @@ function UserProfile(props) {
 
  const handleSignOut = () => {
    localStorage.removeItem('user');
-   localStorage.removeItem('businessAuthToken');
+   localStorage.removeItem('businessData');
    navigate('/home');
    window.location.reload();
  };
